@@ -1,39 +1,31 @@
 import { useCallback } from "react";
 import { useRouter } from "next/router";
-import styles from "./index.module.css";
-
-
+import styles from "@/styles/index.module.css";
 
 const LandingPage = () => {
   const router = useRouter();
-
-  const onPrimaryButtonClick = useCallback(() => {
+  const handleButtonClick = useCallback(() => {
     router.push("/logIn");
   }, [router]);
 
   return (
-    <div className={styles.landingPage}>
-      <img className={styles.bgImage} alt="" src="/image-9@2x.png" />
-      <section className={styles.rectangleParent}>
-        <div />
-        <h1 className={styles.title}>CONOCE COMO TRABAJAMOS</h1>
-        <div className={styles.Wrapper}>
-            En Rockwell Automation, nos dedicamos a impulsar la excelencia en la
-            industria a través de soluciones de automatización de vanguardia.
-            Desde sistemas de control avanzados hasta software de análisis de
-            datos, estamos liderando el camino hacia un futuro más eficiente y
-            productivo.
-        </div>
-        <div >
-          <button
-            className={styles.primaryButton}
-            onClick={onPrimaryButtonClick}
-          >
-            <div className={styles.ingresar}>Ingresar</div>
-          </button>
-        </div>
-      </section>
-    </div>
+    <div className={styles.container}>
+    <main className={styles.main}>
+      <div className={styles.textContainer}>
+        <h1>CONOCE COMO TRABAJAMOS</h1>
+        <p>
+          En Rockwell Automation, nos dedicamos a impulsar la excelencia en la
+          industria a través de soluciones de automatización de vanguardia.
+          Desde sistemas de control avanzados hasta software de análisis de
+          datos, estamos liderando el camino hacia un futuro más eficiente y
+          productivo.
+        </p>
+        <button className={styles.button} onClick={handleButtonClick}>
+          Ingresar
+        </button>
+      </div>
+    </main>
+  </div>
   );
 };
 
