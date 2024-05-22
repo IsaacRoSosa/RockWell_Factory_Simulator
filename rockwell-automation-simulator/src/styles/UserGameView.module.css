@@ -1,0 +1,36 @@
+/* styles/Section1.module.css */
+.section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, #ff7e5f, #feb47b); /* Ajusta los colores según tus necesidades */
+    padding: 20px;
+    height: 100vh; /* Ajusta la altura según tus necesidades */
+  }
+  
+  .left, .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .center {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .left h2, .right h2 {
+    color: #fff;
+    font-size: 1.5em;
+  }
+  
+  .image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  

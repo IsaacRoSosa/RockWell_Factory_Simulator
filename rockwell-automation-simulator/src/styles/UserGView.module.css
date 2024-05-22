@@ -1,0 +1,56 @@
+/* components/Section1.module.css */
+.section1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .companyInfo {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .logo {
+    width: 100px;
+    margin-right: 20px;
+  }
+  
+  .recommendedProducts, .leaderboard {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .product {
+    display: flex;
+    align-items: center;
+  }
+  
+  .productLogo {
+    width: 50px;
+    margin-right: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .rating {
+    width: 100px;
+    height: 10px;
+    background: #00f;
+    border-radius: 5px;
+  }
+  
