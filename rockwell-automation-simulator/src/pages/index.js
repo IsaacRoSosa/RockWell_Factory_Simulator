@@ -12,13 +12,13 @@ const LandingPage = () => {
     <div className={styles.container}>
     <main className={styles.main}>
       <div className={styles.textContainer}>
-        <h1>CONOCE COMO TRABAJAMOS</h1>
+        <h1>TRY OUR NEW EXPERIENCE CENTER</h1>
         <p>
-          En Rockwell Automation, nos dedicamos a impulsar la excelencia en la
-          industria a través de soluciones de automatización de vanguardia.
-          Desde sistemas de control avanzados hasta software de análisis de
-          datos, estamos liderando el camino hacia un futuro más eficiente y
-          productivo.
+        At Rockwell Automation, we are dedicated to driving excellence in
+            industry through cutting-edge automation solutions.
+            From advanced control systems to analysis software
+            data, we are leading the way towards a more efficient and
+            productive.
         </p>
         <button className={styles.button} onClick={handleButtonClick}>
           Ingresar

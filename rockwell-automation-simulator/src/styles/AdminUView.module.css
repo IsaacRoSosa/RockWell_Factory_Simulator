@@ -1,6 +1,8 @@
 /* styles/UserSection.module.css */
 .section {
     padding: 20px;
+    height: 100vh;
+    background-color: black;
   }
   
   .header {
@@ -13,7 +15,7 @@
   }
   
   .content {
-    background: linear-gradient(135deg, #ff5f6d, #ffc371);
+    background: linear-gradient(135deg, #EB2C2B, #61008E);
     border-radius: 8px;
     padding: 20px;
     color: white;

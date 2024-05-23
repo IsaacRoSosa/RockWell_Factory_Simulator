@@ -1,36 +1,48 @@
 /* styles/Section1.module.css */
 .section {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, #ff7e5f, #feb47b); /* Ajusta los colores según tus necesidades */
-    padding: 20px;
+    flex-direction: column;
+   /* background: linear-gradient(to bottom, #ff7e5f, #feb47b); /* Ajusta los colores según tus necesidades */
+   background-color: black;
+ 
     height: 100vh; /* Ajusta la altura según tus necesidades */
-  }
-  
-  .left, .right {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .center {
-    flex: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .left h2, .right h2 {
-    color: #fff;
-    font-size: 1.5em;
-  }
-  
-  .image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-  
+}
+
+.gameContainer{
+  margin-top: 30px;
+  height: 90%;
+  width: 80%;
+  background-color: aliceblue;
+  align-self: center;
+  border-radius: 25px;
+  background-image: url('/game.png');
+  background-size: cover;
+  background-position: center;
+  border: 3px solid #FF0000;
+  box-shadow: 0 0 15px 0 #ff0000;
+}
+
+.informationContainer{
+  display: flex;
+  margin-top: 30px;
+  height: 20%;
+  width: 100%;
+  background-color: #f9f9f9;
+  align-self: center;
+  justify-content: center;
+}
+
+.Recomendations{
+  width: 50%;
+  background-color: #feb47b;
+  display: flex;
+  justify-content: center;
+}
+
+
+.Products{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+

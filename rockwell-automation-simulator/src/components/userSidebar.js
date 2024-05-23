@@ -1,5 +1,5 @@
 // components/Sidebar.js
-import styles from '@/styles/ClientSidebar.module.css';
+import styles from '@/styles/AdminSidebar.module.css';
 import { useRouter } from 'next/router'; // Importa useRouter
 
 const UserSidebar = ({ setActiveSection }) => {
