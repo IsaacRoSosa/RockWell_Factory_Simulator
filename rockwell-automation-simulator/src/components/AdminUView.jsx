@@ -23,9 +23,7 @@ const users = [
 const AdminUView = () => {
   return (
     <div className={styles.section}>
-      <div className={styles.header}>
-        <h1>Visión de Administrador - Usuarios</h1>
-      </div>
+    
       <div className={styles.content}>
         <h2>USERS</h2>
         <div className={styles.table}>
