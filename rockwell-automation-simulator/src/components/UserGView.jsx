@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from '@/styles/UserGView.module.css'
-
+ 
 const UserGeneralView = () => {
     return (
-        <div className={styles.section1}>
+      <div className={styles.section1}>
       <div className={styles.companyInfo}>
         <img src="/cocacola-logo.jpeg" alt="Coca Cola Logo" className={styles.logo} />
         <div>
@@ -14,7 +14,8 @@ const UserGeneralView = () => {
         </div>
       </div>
       <div className={styles.recommendedProducts}>
-        <h2>Recommended Products</h2>
+      <div className={styles.HeadTable}>       <h2>Recommended Products</h2>  </div>
+   
         <div className={styles.product}>
           <img src="/emulate3d-logo.png" alt="Emulate 3D" className={styles.productLogo} />
           <p>
@@ -27,7 +28,7 @@ const UserGeneralView = () => {
         </div>
       </div>
       <div className={styles.leaderboard}>
-        <h2>LEADERBOARD</h2>
+        <div className={styles.HeadTable}>        <h2>LEADERBOARD</h2></div>
         <table className={styles.table}>
           <thead>
             <tr>

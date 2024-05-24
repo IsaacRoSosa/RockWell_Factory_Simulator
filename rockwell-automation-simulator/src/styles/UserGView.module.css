@@ -5,7 +5,7 @@
     gap: 20px;
     padding: 20px;
   }
-  
+   
   .companyInfo {
     grid-column: span 2;
     display: flex;
@@ -21,14 +21,18 @@
   }
   
   .recommendedProducts, .leaderboard {
-    background: #f9f9f9;
-    padding: 20px;
+    background-color: #EB2C2B;
+    box-shadow: 0 0 10px 0 #ff6f00;;
     border-radius: 8px;
   }
-  
+
+
+
   .product {
     display: flex;
     align-items: center;
+    background-color: white;
+    height: 75%;
   }
   
   .productLogo {
@@ -40,11 +44,30 @@
     width: 100%;
     border-collapse: collapse;
   }
+
+  .table thead{
+    background: #EB2C2B;
+    width: 100%;
+    color: white;
+  }
+
+  .HeadTable{
+    background: #EB2C2B;
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-size: 1.4em;
+  }
+  
   
   .table th, .table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: left;
+  }
+
+  .table tbody tr{
+    background: #f9f9f9;
   }
   
   .rating {

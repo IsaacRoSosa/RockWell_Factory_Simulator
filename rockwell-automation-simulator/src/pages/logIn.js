@@ -1,10 +1,8 @@
-import styles from "@/styles/logIn.module.css"
-import InputField from "@/components/InputField"; 
 import { useCallback, useState } from "react";
 import { useRouter } from "next/router";
+import styles from "@/styles/logIn.module.css";
 
-const InicioDeSesin = () => {
-
+const InicioDeSesion = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,44 +31,49 @@ const InicioDeSesin = () => {
   }, []);
 
   return (
-    <div className={styles.body} > 
+    <div className={styles.body}>
       <div className={styles.textContainer}>
         <div className={styles.formContainer}>
-
           <div className={styles.imageContainer}>
-          <img className={styles.logo} loading="lazy" alt="" src="/RockwellFlogo.png" />
+            <img className={styles.logo} loading="lazy" alt="Logo" src="/RockwellFlogo.png" />
           </div>
-
           <div className={styles.form}>
-          <h1 className={styles.title}>¡Welcome Back!</h1>
+            <h1 className={styles.title}>¡Welcome Back!</h1>
             <h2 className={styles.text}>Log in with your Rockwell Automation account</h2>
-            <br></br>
-            <InputField placeholder="Email" type="email" value={email} onChange={handleEmailChange} />
-            <InputField placeholder="Password" type="password" value={password} onChange={handlePasswordChange} />
-            {errorMessage && <p>{errorMessage}</p>}
-
+            <br />
+            <input
+              placeholder="Email"
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              className={styles.input}
+            />
+            <input
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              className={styles.input}
+            />
+            {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
             <div className={styles.logContainer}>
-
-              <div className={styles.LogIn}>
-              <input className={styles.rememberMeCheckbox}  type="checkbox"/> 
-                 <h1> Stay logged In</h1>
-              </div> 
-          
-            <button className={styles.accountBotton} onClick={onCreateAnAccountButtonClick}> Create an account </button>
-            </div>
-
-          
-          </div>
-         
-              <button className={styles.LogBotton} onClick={onLogInButtonClick}>
-                <b >Log in</b>
+              <div className={styles.logIn}>
+                <input className={styles.rememberMeCheckbox} type="checkbox" />
+                <h1>Stay logged In</h1>
+              </div>
+              <button className={styles.accountButton} onClick={onCreateAnAccountButtonClick}>
+                Create an account
               </button>
-
+            </div>
+            <button className={styles.logButton} onClick={onLogInButtonClick}>
+              <b>Log in</b>
+            </button>
+          </div>
         </div>
       </div>
-      <div className={styles.recImage}>  </div>
-     </div>
+      <div className={styles.recImage}></div>
+    </div>
   );
 };
 
-export default InicioDeSesin;
+export default InicioDeSesion;
