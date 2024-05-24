@@ -5,7 +5,7 @@
    /* background: linear-gradient(to bottom, #ff7e5f, #feb47b); /* Ajusta los colores según tus necesidades */
    background-color: black;
  
-    height: 100vh; /* Ajusta la altura según tus necesidades */
+    height: 105vh; /* Ajusta la altura según tus necesidades */
 }
 
 .gameContainer{
@@ -34,7 +34,6 @@
 
 .Recomendations{
   width: 50%;
-  background-color: #feb47b;
   display: flex;
   justify-content: center;
 }
