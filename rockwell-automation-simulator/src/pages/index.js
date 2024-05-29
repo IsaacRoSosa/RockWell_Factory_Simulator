@@ -21,7 +21,7 @@ const LandingPage = () => {
             productive.
         </p>
         <button className={styles.button} onClick={handleButtonClick}>
-          Ingresar
+          Log In
         </button>
       </div>
     </main>

@@ -1,14 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
 .main {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
 }
- 
+  
 .container{
   width: 100%;
-  height: 100%;
   background-color: #ff5252;
   background-image: url('/main-bg2.svg');
   background-size: cover;
@@ -20,24 +21,27 @@
   height: fit-content;
   background-color: aliceblue;
   align-items: center;
-  justify-content: center;
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  padding: 30px;
+  padding:30px;
   box-shadow: 0 10px 45px rgba(255, 167, 4, 0.82); 
+  font-family: Poppins;
+  gap: 1px;
  }
 
   .textContainer h1{
-    font-size: 3em;
+    font-size: 2em;
     font-weight: 600;
-    line-height: 0.5;
+    text-align: center;
+    margin-bottom: 2vh;
   }
 
  .textContainer p{
   width: 80%;
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-align: center;
+  margin-top: 1vh;
   
  }
 
@@ -52,6 +56,8 @@
   width: fit-content;
   padding: 10px 20px;
   transition: 0.5s;
+  width: 30%;
+  margin-top: 2vh;
  }
 
  .button:hover{
