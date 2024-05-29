@@ -16,6 +16,7 @@ const InicioDeSesin1 = () => {
               <input type="text" placeholder="Enter your Last Name" className={styles.input} required />
             </div>
             <input type="email" placeholder="Enter your contact email" className={styles.inputFull} required />
+            <input type="email" placeholder="Enter your username" className={styles.inputFull} required />
             <input type="password" placeholder="Enter your password" className={styles.inputFull} required />
             <input type="text" placeholder="Enter your company location" className={styles.inputFull} required />
             <input type="text" placeholder="Enter your Company" className={styles.inputFull} />

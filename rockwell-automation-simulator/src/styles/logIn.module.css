@@ -1,26 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
 
 .body {
     display: flex;
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f8f8;
+    
+
   }
   
   .textContainer {
     display: flex;
-    width: 900px;
+    width: 65%;
+    height: 100vh;
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center;
     border-radius: 10px;
+
   }
   
   .formContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px;
-    width: 60%;
+
+
+    width: 100%;
+
+    
   }
   
   .imageContainer {
@@ -30,30 +36,47 @@
   }
   
   .logo {
-    width: 150px;
+    width: 55%;
+  
   }
   
   .form {
-    width: 100%;
+    width: 60%;
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .title {
-    font-size: 24px;
+    font-size: 2.4em;
     margin-bottom: 10px;
+    font-family: Poppins;
+    font-weight: 400;
   }
   
   .text {
-    font-size: 16px;
-    color: #666;
+    font-size: 1em;
+    color: #000000;
     margin-bottom: 20px;
+   font-weight: 400;
+    font-family: poppins;
   }
   
   .input {
-    width: 100%;
+    width: 65%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 15px;
+  }
+
+  .InputTitle{
+    line-height: 0;
+    font-size: 1em;
+    font-family: Poppins;
+    font-weight: 500;
+    width: 68%;
   }
   
   .errorMessage {
@@ -66,11 +89,20 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+  
+    width: 70%;
   }
   
   .logIn {
     display: flex;
     align-items: center;
+  }
+
+  .logIn h1{
+    font-size: 0.8em;
+    font-family: Poppins;
+    font-weight: 500;
+    margin-right: 10px;
   }
   
   .rememberMeCheckbox {
@@ -78,22 +110,26 @@
   }
   
   .accountButton {
-    background: none;
+   background: none;
     border: none;
     color: #ff5a5f;
     cursor: pointer;
     font-size: 14px;
+    font-family: Poppins;
+    font-weight: 500;
   }
   
   .logButton {
-    width: 100%;
-    background-color: #ff5a5f;
+    width: 50%;
+    background-color: #EB2C2B;
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
+    margin-top: 2vh;
+    
   }
   
   .logButton:hover {
@@ -101,29 +137,18 @@
   }
   
   .recImage {
-    background: linear-gradient(45deg, #ff5a5f, #ff7f50);
-    width: 40%;
-    border-radius: 0 10px 10px 0;
-  }
-  
-/*
-.body{
-    width: 100%;
+    width: 35%;
+    border-radius: 25px 0 0 25px;
     height: 100vh;
-    background-color: white;
-    display: flex;
-}
+    background-image: url('/gradient1.jpeg');
+    background-size: 240% auto;
+    animation: moveBackground 120s linear infinite;
 
-.textContainer{
-    width: 65%;
-    height: fit-content;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+  }
 
-@keyframes moveBackground {
+
+  
+  @keyframes moveBackground {
     0% {
         background-position: 0% 0%;
     }
@@ -135,129 +160,3 @@
     }
 }
 
-.recImage{
-    width: 35%;
-    height: 100%;
-    border-top-left-radius: 10%;
-    border-bottom-left-radius: 10%;
-    background-image: url('/gradient1.jpeg');
-    background-size: 240% auto;
-    animation: moveBackground 120s linear infinite;
-}
- 
-.formContainer{
-    width: 75%;
-    height: fit-content;
-   
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.form{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 70%;
-}
-
-.form h1{
-    font-size: 3em;
-    font-weight: 600;
-    line-height: 0.5;
-    margin-bottom: 20px;
-}
-
-.form h2{
-    font-size: 1.6em;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-.imageContainer{
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-.logo{
-    object-fit: contain;
-    width: 80%;
-    margin-top: 8%;
-}
-
-.logContainer{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-
-}
-
-.LogIn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.rememberMeCheckbox{
-
-  height:20px;
-  width: 20px;
-  align-self: center;
-  justify-content: center;
-
-}
-
-.LogIn h1{
-    font-size: 1.2em;
-    font-weight: 600;
-    line-height: 0.5;
-    margin-left: 10px;
-}
-
-.LogBotton{
-
-    cursor: pointer;
-    border: none;
-    background-color: #EB2C2B;
-    border-radius: 50px;
-    font-size: 1.5em;
-    color: white;
-    font-weight: 500;
-    width: 50%;
-    padding: 10px 20px;
-    transition: 0.5s;
-    margin-top: 6%;
-}
-
-.LogBotton:hover{
-    background-color: #ff5252;
-    color: black;
-    transform: scale(1.1);
-}
-
-.accountBotton{
-    cursor: pointer;
-    border: none;
-    background-color: #C42745;
-    border-radius: 50px;
-    font-size: 1em;
-    color: white;
-    font-weight: 500;
-    width: fit-content;
-    padding: 10px 20px;
-    transition: 0.5s;
-    height: 35px;
-    align-items: center;
-}
-
-.accountBotton:hover{
-    background-color: #d02626;
-    color: black;
-    transform: scale(1.1);
-}
-*/

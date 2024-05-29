@@ -41,6 +41,7 @@ const InicioDeSesion = () => {
             <h1 className={styles.title}>¡Welcome Back!</h1>
             <h2 className={styles.text}>Log in with your Rockwell Automation account</h2>
             <br />
+            <h2 className={styles.InputTitle}>Email</h2>
             <input
               placeholder="Email"
               type="email"
@@ -48,14 +49,16 @@ const InicioDeSesion = () => {
               onChange={handleEmailChange}
               className={styles.input}
             />
+            <h2 className={styles.InputTitle}>Password</h2>
             <input
-              placeholder="Password"
+              placeholder="Enter your Password"
               type="password"
               value={password}
               onChange={handlePasswordChange}
               className={styles.input}
             />
             {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+            <br />
             <div className={styles.logContainer}>
               <div className={styles.logIn}>
                 <input className={styles.rememberMeCheckbox} type="checkbox" />
@@ -71,7 +74,10 @@ const InicioDeSesion = () => {
           </div>
         </div>
       </div>
-      <div className={styles.recImage}></div>
+      <div className={styles.recImage}>
+
+        
+      </div>
     </div>
   );
 };
