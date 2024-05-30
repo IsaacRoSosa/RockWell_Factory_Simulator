@@ -1,5 +1,5 @@
+/* Importamos la fuente Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 
 .main {
   display: flex;
@@ -7,16 +7,18 @@
   justify-content: center;
   height: 100vh;
 }
-  
-.container{
+
+.container {
+  position: relative;
   width: 100%;
+  height: 100vh;
   background-color: #ff5252;
   background-image: url('/main-bg2.svg');
   background-size: cover;
-
+  overflow: hidden; /* Para asegurarnos que los blobs no se salgan del contenedor */
 }
 
-.textContainer{
+.textContainer {
   width: 60%;
   height: fit-content;
   background-color: aliceblue;
@@ -24,28 +26,29 @@
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  padding:30px;
-  box-shadow: 0 10px 45px rgba(255, 167, 4, 0.82); 
+  padding: 30px;
+  box-shadow: 0 10px 45px rgba(255, 167, 4, 0.82);
   font-family: Poppins;
   gap: 1px;
- }
+  position: relative; /* Para posicionar bien el contenido sobre los blobs */
+  z-index: 1;
+}
 
-  .textContainer h1{
-    font-size: 2em;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 2vh;
-  }
+.textContainer h1 {
+  font-size: 2em;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2vh;
+}
 
- .textContainer p{
+.textContainer p {
   width: 80%;
   font-size: 1.2em;
   text-align: center;
   margin-top: 1vh;
-  
- }
+}
 
- .button{
+.button {
   cursor: pointer;
   border: none;
   background-color: #EB2C2B;
@@ -59,12 +62,61 @@
   width: 30%;
   margin-top: 2vh;
   font-family: poppins;
- }
+}
 
- .button:hover{
+.button:hover {
   background-color: #ff5252;
-  color: black;
   transform: scale(1.1);
- }
+}
 
- 
+/* Estilos y animaciones para los blobs */
+.blob {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: rgba(224, 190, 22, 0.384);
+  border-radius: 50%;
+  filter: blur(25px);
+  animation: moveBlobs 20s infinite;
+  z-index: 0;
+}
+
+.blob1 {
+  top: 10%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.blob2 {
+  top: 50%;
+  left: 70%;
+  animation-delay: 5s;
+}
+
+.blob3 {
+  top: 80%;
+  left: 30%;
+  animation-delay: 10s;
+}
+
+.blob4 {
+  top: 30%;
+  left: 50%;
+  animation-delay: 15s;
+}
+
+.blob5 {
+  top: 70%;
+  left: 90%;
+  animation-delay: 20s;
+}
+
+
+@keyframes moveBlobs {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-50px) scale(1.2);
+  }
+}
