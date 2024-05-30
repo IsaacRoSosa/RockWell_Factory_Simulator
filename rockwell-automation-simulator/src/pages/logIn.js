@@ -19,7 +19,7 @@ const InicioDeSesion = () => {
   }, [router, email, password]);
 
   const onCreateAnAccountButtonClick = useCallback(() => {
-    router.push("/inicio-de-sesin1");
+    router.push("/signIn");
   }, [router]);
 
   const handleEmailChange = useCallback((e) => {
