@@ -8,13 +8,34 @@ const InicioDeSesion = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const onLogInButtonClick = useCallback(() => {
-    if (email === "user" && password) {
-      router.push("/userView");
-    } else if (email === "admin" && password) {
-      router.push("/adminView");
-    } else {
-      setErrorMessage("Correo electrónico o contraseña incorrectos");
+  const onLogInButtonClick = useCallback(async () => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: email,
+          password: password,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.user_type === 'admin') {
+          router.push("/adminView");
+        } else if (data.user_type === 'user') {
+          router.push("/userView");
+        } else {
+          setErrorMessage("Invalid user type");
+        }
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message);
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      setErrorMessage("Error al procesar la solicitud");
     }
   }, [router, email, password]);
 
@@ -41,10 +62,10 @@ const InicioDeSesion = () => {
             <h1 className={styles.title}>¡Welcome Back!</h1>
             <h2 className={styles.text}>Log in with your Rockwell Automation account</h2>
             <br />
-            <h2 className={styles.InputTitle}>Email</h2>
+            <h2 className={styles.InputTitle}>User</h2>
             <input
-              placeholder="Email"
-              type="email"
+              placeholder="User"
+              type="text"
               value={email}
               onChange={handleEmailChange}
               className={styles.input}
@@ -74,10 +95,7 @@ const InicioDeSesion = () => {
           </div>
         </div>
       </div>
-      <div className={styles.recImage}>
-
-        
-      </div>
+      <div className={styles.recImage}></div>
     </div>
   );
 };

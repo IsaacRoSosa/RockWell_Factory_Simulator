@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+
 import { Pool } from 'pg';
 
 const pool = new Pool({

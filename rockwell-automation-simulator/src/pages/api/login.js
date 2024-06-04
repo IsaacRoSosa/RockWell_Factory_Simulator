@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import { Pool } from 'pg';
 
 const pool = new Pool({
@@ -24,7 +23,7 @@ export default async function handler(req, res) {
         console.log("Contraseña introducida:", password); // Imprimir la contraseña introducida
         if (password == user.user_password) {
           console.log("Contraseña correcta"); // Registro de que la contraseña es correcta
-          res.status(200).json({ message: 'Login successful!', user });
+          res.status(200).json({ message: 'Login successful!', user_type: user.user_type });
         } else {
           console.log("Contraseña incorrecta"); // Registro de que la contraseña es incorrecta
           res.status(401).json({ message: 'Invalid credentials' });
