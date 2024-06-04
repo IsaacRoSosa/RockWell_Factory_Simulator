@@ -1,25 +1,23 @@
-// components/Charts.js
 import React from 'react';
 import { Doughnut, Line } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend, LineElement, PointElement, LinearScale, Title, CategoryScale } from 'chart.js';
 
 Chart.register(ArcElement, Tooltip, Legend, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
-const SatisfactionChart = () => {
+const SatisfactionChart = ({ satisfactionPercentage }) => {
   const data = {
     labels: ['Satisfied', 'Unsatisfied'],
     datasets: [
       {
-        data: [95, 5],
+        data: [satisfactionPercentage, 100 - satisfactionPercentage],
+        borderWidth: 0,
         backgroundColor: ['#F5EFD9', '#22234B'],
         hoverBackgroundColor: ['#F5EFD9', '#22234B'],
-        borderWidth: 0,
-      
       },
     ],
   };
 
-  const options = {
+  const options ={
     rotation: -110,
     circumference: 220,
     cutout: '90%',
@@ -31,26 +29,24 @@ const SatisfactionChart = () => {
         
       },
     },layout: {
-      padding: 0, // Añade esta línea
+      padding: 0, 
     },
   };
 
   return <Doughnut data={data} options={options} style={{width: '70%', height: '70%', margin:'0', padding: '0'}} />;
 };
 
-const ClientsContactedChart = () => {
+const ClientsContactedChart = ({ clientsContactedPercentage }) => {
   const data = {
-    labels: ['Played', 'Contacted'],
+    labels: ['Contacted', 'Not Contacted'],
     datasets: [
       {
-        data: [14, 5],
-        backgroundColor: ['#F9077C', '#22234B'],
-        hoverBackgroundColor: ['#F9077C', '#22234B'],
-        borderWidth: 0,
+        data: [clientsContactedPercentage, 100 - clientsContactedPercentage],
+        backgroundColor: ['#4BC0C0', '#FF9F40'],
+        hoverBackgroundColor: ['#4BC0C0', '#FF9F40'],
       },
     ],
   };
-
   const options = {
     rotation: -110,
     circumference: 220,
@@ -66,66 +62,53 @@ const ClientsContactedChart = () => {
       padding: 0, // Añade esta línea
     },
   };
+
   return <Doughnut data={data} options={options} style={{width: '70%', height: '70%', margin:'0', padding: '0'}} />;
 };
+
 
 const AveragePlayTimeChart = () => {
   const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
     datasets: [
       {
-        label: 'Play Time',
-        data: [20, 10, 30, 40, 20, 30, 40, 30, 20, 30, 20, 40],
-        borderColor: '#FFFFFF',
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: 'Average',
-        data: [10, 20, 15, 25, 20, 15, 25, 20, 15, 10, 20, 15],
-        borderColor: '#00FFFF',
-        backgroundColor: 'rgba(0, 255, 255, 0.1)',
-        fill: true,
-        tension: 0.4,
+        label: 'Average Play Time',
+        data: [65, 59, 80, 81, 56, 55],
+        fill: false,
+        backgroundColor: 'rgb(255, 0, 0)', // línea roja
+        borderColor: 'rgb(255, 0, 0)', // línea roja
       },
     ],
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
     plugins: {
       legend: {
-        display: false,
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: '#FFFFFF',
-        },
-      },
-      y: {
-        grid: {
-          color: '#444444',
-        },
-        ticks: {
-          color: '#FFFFFF',
+        labels: {
+          color: 'rgb(0, 0, 0)', // color del texto negro
         },
       },
     },
+    layout: {
+      padding: 10,
+    },
+    elements: {
+      line: {
+        tension: 0.4,
+      },
+    },
+    interaction: {
+      intersect: false,
+    },
+    backgroundColor: 'rgb(255, 255, 255, 0)', // fondo blanco
   };
 
-  return (
-    <div style={{ backgroundColor: '#1E1E1E', borderRadius: '10px', width:'100%', height:'90%' , display:'flex', alignItems:'center', flexDirection:'column'}}>
-      <h2 style={{ color: '#FFFFFF' }}>Average PlayTime</h2>
-      <Line data={data} options={options} style={{width: '80%',height:'85%'}} />
-    </div>
-  );
+  return <Line data={data} options={options} />;
 };
 
 export { SatisfactionChart, ClientsContactedChart, AveragePlayTimeChart };

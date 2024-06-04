@@ -1,4 +1,6 @@
 import { Pool } from 'pg';
+import cookie from 'cookie';
+
 
 const pool = new Pool({
   user: 'reto_3ild_user',
@@ -22,6 +24,23 @@ export default async function handler(req, res) {
         console.log("Contraseña almacenada en la base de datos:", user.user_password); // Imprimir la contraseña almacenada
         console.log("Contraseña introducida:", password); // Imprimir la contraseña introducida
         if (password == user.user_password) {
+          const userData = {
+            user_name: user.user_firstname,
+            user_type: user.user_type, 
+            user_id: user.user_id
+          };
+
+          const serializedCookie = cookie.serialize('user', JSON.stringify(userData), {
+         //   httpOnly: true,
+         //   secure: process.env.NODE_ENV !== 'development',
+            maxAge: 60 * 60 * 24 * 7, // 1 semana
+            sameSite: 'strict',
+            path: '/'
+          });
+
+          res.setHeader('Set-Cookie', serializedCookie);
+          console.log("Cookie set:", serializedCookie); // Agrega este log para la cookie
+          
           console.log("Contraseña correcta"); // Registro de que la contraseña es correcta
           res.status(200).json({ message: 'Login successful!', user_type: user.user_type });
         } else {
