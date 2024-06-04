@@ -2,7 +2,7 @@
 .section {
   padding: 20px;
   height: 100vh;
-  background-color: black;
+  background-color: white;
 }
 
 .header {
@@ -46,7 +46,7 @@
 
 
   border: 3px solid #FF0000;
-  box-shadow: 0 0 15px 0 #ff0000;
+  box-shadow: 0 0 5px 0 #ff0000;
   transition: 0.5s;
   background-color: #1E1E1E;
 }
@@ -60,7 +60,7 @@
 .welcomeText h2 {
   margin: 0;
   font-size: 1.6em;
-  color: #fff;
+  color: rgb(255, 255, 255);
 }
 
 .welcomeText h3 {
@@ -85,18 +85,12 @@
 .map {
   grid-column: 2 / 3;
   grid-row: 1 / 3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  border-radius: 25px;
-  background-image: url('/Map.png');
-  background-size: cover;
+  color: rgb(255, 255, 255);
   border-radius: 25px;
   border: 3px solid #FF0000;
-  box-shadow: 0 0 15px 0 #ff0000;
+  box-shadow: 0 0 5px 0 #ff0000;
   transition: 0.5s;
-  background-color: #1E1E1E;
+
 }
 
 .stats {
@@ -108,22 +102,25 @@
 }
 
 .statCard {
-  background: #FF8A65;
+
+  
   flex: 1;
   padding: 20px;
-  color: #fff;
-  height: 5vh;
+  color: black;
+  height:fit-content;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 25px;
   border: 3px solid #FF0000;
-  box-shadow: 0 0 15px 0 #ff0000;
+  box-shadow: 0 0 5px 0 #ff0000;
   transition: 0.5s;
-  background-color: #1E1E1E;
+
 }
 
 .statCard h3 {
-  margin: 0 0 10px 0;
+  margin: 0 0 0px 0;
+  color: black;
 }
 
 .statCard p {
@@ -134,7 +131,6 @@
 .statsinfo {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
   align-items: center;
 }
 
@@ -159,13 +155,14 @@
   justify-content: center;
   border-radius: 25px;
   border: 3px solid #FF0000;
-  box-shadow: 0 0 15px 0 #ff0000;
+  box-shadow: 0 0 5px 0 #ff0000;
   transition: 0.5s;
   height: 45vh;
+  color: black;
 }
 .satisfaction:hover{
   transform: scale(1.05);
-  box-shadow: 0 0 25px 0 #ff0000;
+  box-shadow: 0 0 15px 0 #ff0000;
   
 }
 
@@ -183,7 +180,7 @@
 
 .satisfaction h3 {
   font-size: 2em;
-  color: white;
+  color: black;
   line-height: 0.1;
 }
 
@@ -212,7 +209,7 @@
 .services {
   border-radius: 25px;
   border: 3px solid #FF0000;
-  box-shadow: 0 0 15px 0 #ff0000;
+  box-shadow: 0 0 5px 0 #ff0000;
   transition: 0.5s;
   background-color: #1E1E1E;
   flex: 1;
@@ -239,6 +236,8 @@
   display: flex;
   justify-content: center;
   align-items: center;  
+  background-color: white;
+  border-radius: 25px;
 
 }
 
@@ -247,8 +246,41 @@
   grid-row: 3 / 4;
   border-radius: 25px;
   border: 3px solid #FF0000;
-  box-shadow: 0 0 15px 0 #ff0000;
+  box-shadow: 0 0 5px 0 #ff0000;
   transition: 0.5s;
-  background-color: #1E1E1E;
+  background-color: white;
  
+}
+.SatisfactionContainer2{
+  width: 80%;
+  padding: 10px;
+  height: fit-content ;
+  background-color: #555;
+  border-radius: 15px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(145deg, #C42745, #F47C07);
+  gap: 5px;
+  
+}
+
+
+
+.SatisfactionContainer2 h3{
+  margin-top: 0px;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 0px;
+}
+
+
+.SatisfactionContainer2 p{
+
+  color: #fff;
+  font-size: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  
+  
 }
