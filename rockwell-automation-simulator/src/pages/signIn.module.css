@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 
 
 .container {
@@ -7,9 +7,9 @@
   align-items: center;
   height: 100vh;
   background-color: #f8f8f8;
-  font-family: poppins;
-}
 
+}
+ 
 .buttonArrow{
  margin-bottom: 0px;
  height: 6vh;
@@ -82,14 +82,14 @@
 }
 
 .title {
-  font-size: 2em;
+  font-size: 3em;
   margin-bottom: 0;
   font-weight: 400;
   margin-top: 0px;
 }
 
 .description {
-  font-size: 16px;
+  font-size: 26px;
   margin-bottom: 0px;
   color: #666;
   width: 73%;
@@ -120,9 +120,13 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-top: 0;
-  font-family: poppins;
-  font-weight: 500;
+
+  font-weight: 700;
 }
+
+
+
+
 
 .inputFull {
   width: 98%;
@@ -131,9 +135,10 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 5px;
-  font-family: poppins;
-  font-weight: 500;
+
+  font-weight: 700;
 }
+
 
 .button {
   background-color: #EB2C2B;
@@ -142,11 +147,11 @@
   border: none;
   border-radius:25px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 4vh;
   width: 100%;
   align-self: center;
-  font-family: Poppins;
+
   transition: 0.4s;
 }
 
@@ -157,8 +162,8 @@
 .InputTitle{
   margin-top: 0px;
   margin-bottom: 0px;
-  font-size: 1em;
-  font-family: Poppins;
+  font-size: 1.3em;
+
   font-weight: 500;
   width: 68%;
 }

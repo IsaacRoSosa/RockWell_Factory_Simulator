@@ -29,6 +29,10 @@ const AdminUView = () => {
             <div className={styles.column}>CONTACT EMAIL</div>
             <div className={styles.column}>COMPANY</div>
             <div className={styles.column}>DATE REGISTERED</div>
+            <div className={styles.column}>INDUSTRY</div>
+            <div className={styles.column}>EDIT</div>
+            <div className={styles.column}>DELETE</div>
+            
           </div>
           {users.map((user, index) => (
             <div className={styles.tableRow} key={index}>
