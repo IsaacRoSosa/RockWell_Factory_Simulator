@@ -16,27 +16,51 @@ export default async function handler(req, res) {
     try {
       const client = await pool.connect();
 
+      // Datos para la tabla de usuarios
       // Obtener el total de usuarios
       const totalUsersResult = await client.query('SELECT COUNT(*) FROM "User"');
       const totalUsers = totalUsersResult.rows[0].count;
-
       // Obtener el número de usuarios registrados hoy
       const today = new Date();
       const todayDateString = today.toISOString().split('T')[0];
       const newUsersTodayResult = await client.query('SELECT COUNT(*) FROM "User" WHERE DATE(date_registered) = $1', [todayDateString]);
       const newUsersToday = newUsersTodayResult.rows[0].count;
 
-      // Obtener datos de satisfacción
-      const satisfactionResult = await client.query('SELECT satisfaction FROM "Experience"');
-      const satisfactionData = satisfactionResult.rows.map(row => row.satisfaction);
+      //Datos para la tabla de Game Success
+      //Obtener el total de jugadores que han jugado
+      const players = await client.query('SELECT COUNT(*) FROM "Experience"');
+      const totalPlayers = players.rows[0].count;
+      //Obtener el total de jugadores que han jugado y han sido contactados
+      const contacted = await client.query('SELECT COUNT(*) FROM "Experience" WHERE contact = true');
+      const contactedPlayers = contacted.rows[0].count;
+      //obtener el total de jugadores que han jugado y no han sido contactados
+      const notContacted = await client.query('SELECT COUNT(*) FROM "Experience" WHERE contact = false');
+      const notContactedPlayers = notContacted.rows[0].count;
+      //Obtener el game succes que se mide por el porcentaje de jugadores que han jugado y han sido contactados
+      const gameSuccess = contacted.rows[0].count / players.rows[0].count;
 
-      // Obtener datos de clientes contactados
-      const clientsContactedResult = await client.query('SELECT contact FROM "Experience"');
-      const clientsContactedData = clientsContactedResult.rows.map(row => row.contact);
 
-      // Obtener datos de tiempo de juego
-      const playTimeResult = await client.query('SELECT date_trunc(\'day\', playtime) as day, AVG(EXTRACT(epoch FROM playtime)) as avg_play_time FROM "Experience" GROUP BY day');
-      const playTimeData = playTimeResult.rows;
+      //Datos para el satisfaction rate
+      //Obtener el total de jugadores con un satisfaction mayor a 70
+      const satisfaction = await client.query('SELECT COUNT(*) FROM "Experience" WHERE satisfaction > 70');
+      const satisfactionPlayers = satisfaction.rows[0].count;
+      //Obtener el total de jugadores con un satisfaction menor a 70
+      const dissatisfaction = await client.query('SELECT COUNT(*) FROM "Experience" WHERE satisfaction < 70');
+      const dissatisfactionPlayers = dissatisfaction.rows[0].count;
+      //Obtener el porcentaje de satisfacción
+      const satisfactionRate = satisfaction.rows[0].count / players.rows[0].count;
+
+      //Obtener datos para el grafico de gameTime
+       // Obtener datos de tiempo de juego
+       const playTimeResult = await client.query('SELECT date_played, AVG(EXTRACT(epoch FROM playtime)/60) as avg_play_time_minutes FROM "Experience" GROUP BY date_played ORDER BY date_played;');
+       const playTimeData = playTimeResult.rows; 
+ 
+       // Obtener las fechas de juego y el tiempo promedio de juego para la gráfica
+const playDates = playTimeData.map(row => {
+  const date = new Date(row.date_played);
+  return date.toLocaleDateString('en-GB');
+});
+const avgPlayTimes = playTimeData.map(row => row.avg_play_time_minutes);
 
       // Obtener información de usuarios con compañía
       const usersWithCompanyResult = await client.query(`
@@ -50,31 +74,22 @@ export default async function handler(req, res) {
 
       client.release();
 
-      // Calcular el porcentaje de satisfacción y el éxito del juego
-      const calculateSatisfactionPercentage = (data) => {
-        const total = data.length;
-        const satisfied = data.filter(value => value >= 60).length;
-        return (satisfied / total) * 100;
-      };
-
-      const calculateGameSuccessPercentage = (data) => {
-        const total = data.length;
-        const success = data.filter(value => value === true).length;
-        return (success / total) * 100;
-      };
-
-      const satisfactionPercentage = calculateSatisfactionPercentage(satisfactionData);
-      const gameSuccessPercentage = calculateGameSuccessPercentage(clientsContactedData);
 
       res.status(200).json({ 
         totalUsers, 
         newUsersToday,
-        satisfactionData,
-        clientsContactedData,
-        satisfactionPercentage,
-        gameSuccessPercentage,
-        playTimeData,
-        usersWithCompany  // Incluyendo la nueva información
+        usersWithCompany,  // Incluyendo la nueva información
+        totalPlayers,
+        contactedPlayers,
+        notContactedPlayers,
+        gameSuccess, 
+        satisfactionPlayers,
+        dissatisfactionPlayers,
+        satisfactionRate,
+        playDates,
+        avgPlayTimes,
+    
+
       });
     } catch (error) {
       console.error('Database query failed:', error);

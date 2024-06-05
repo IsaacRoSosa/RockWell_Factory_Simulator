@@ -155,6 +155,35 @@ const InicioDeSesin1 = () => {
               value={formData.company}
               onChange={handleInputChange}
             />
+       <h2 className={styles.InputTitle}>Industry</h2>
+          <select
+            name="industry"
+            className={styles.inputFull}
+            value={formData.company}
+            onChange={handleInputChange}
+          >
+            <option value="">Select your industry</option>
+            <option value="Automotive & Tire">Automotive & Tire</option>
+            <option value="Cement">Cement</option>
+            <option value="Chemical">Chemical</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Fiber & Textiles">Fiber & Textiles</option>
+            <option value="Food & Beverage">Food & Beverage</option>
+            <option value="Household & Personal Care">Household & Personal Care</option>
+            <option value="Hydrogen">Hydrogen</option>
+            <option value="Infrastructure">Infrastructure</option>
+            <option value="Life Sciences">Life Sciences</option>
+            <option value="Marine">Marine</option>
+            <option value="Metals">Metals</option>
+            <option value="Mining">Mining</option>
+            <option value="Oil & Gas">Oil & Gas</option>
+            <option value="Power Generation">Power Generation</option>
+            <option value="Print & Publishingr">Print & Publishing</option>
+            <option value="Pulp & Paper">Pulp & Paper</option>
+            <option value="Water Wastewater">Water Wastewater</option>
+            <option value="Warehouse & Fulfillment">Warehouse & Fulfillment</option>
+          
+          </select>
             <button type="submit" className={styles.button} disabled={formSubmitted}>
               {formSubmitted ? 'Submitting...' : 'Create Account'}
             </button>

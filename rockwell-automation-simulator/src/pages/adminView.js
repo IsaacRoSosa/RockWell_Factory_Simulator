@@ -1,9 +1,12 @@
 // components/Dashboard.js
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import { useRouter } from 'next/router';
+import cookie from 'js-cookie';
 import Sidebar from '@/components/AdminSlidebar';
 import AdminGView from '@/components/AdminGView';
 import AdminUView from '@/components//AdminUView';
 import styles from '@/styles/AdminDashboard.module.css';
+
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('section1');

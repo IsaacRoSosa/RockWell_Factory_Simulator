@@ -4,15 +4,15 @@ import { Chart, ArcElement, Tooltip, Legend, LineElement, PointElement, LinearSc
 
 Chart.register(ArcElement, Tooltip, Legend, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
-const SatisfactionChart = ({ satisfactionPercentage }) => {
+const SatisfactionChart = ({ satisfactionPlayers, dissatisfactionPlayers }) => {
   const data = {
     labels: ['Satisfied', 'Unsatisfied'],
     datasets: [
       {
-        data: [satisfactionPercentage, 100 - satisfactionPercentage],
+        data: [satisfactionPlayers,dissatisfactionPlayers],
         borderWidth: 0,
-        backgroundColor: ['#F5EFD9', '#22234B'],
-        hoverBackgroundColor: ['#F5EFD9', '#22234B'],
+        backgroundColor: ['#ff0000', '#FF9F40'],
+        hoverBackgroundColor: ['#ff0000', '#FF9F40'],
       },
     ],
   };
@@ -36,14 +36,14 @@ const SatisfactionChart = ({ satisfactionPercentage }) => {
   return <Doughnut data={data} options={options} style={{width: '70%', height: '70%', margin:'0', padding: '0'}} />;
 };
 
-const ClientsContactedChart = ({ clientsContactedPercentage }) => {
+const ClientsContactedChart = ({ contactedPlayers, notContactedPlayers }) => {
   const data = {
     labels: ['Contacted', 'Not Contacted'],
     datasets: [
       {
-        data: [clientsContactedPercentage, 100 - clientsContactedPercentage],
-        backgroundColor: ['#4BC0C0', '#FF9F40'],
-        hoverBackgroundColor: ['#4BC0C0', '#FF9F40'],
+        data: [contactedPlayers, notContactedPlayers],
+        backgroundColor: ['#ff0000', '#FF9F40'],
+        hoverBackgroundColor: ['#ff0000', '#FF9F40'],
       },
     ],
   };
@@ -67,24 +67,34 @@ const ClientsContactedChart = ({ clientsContactedPercentage }) => {
 };
 
 
-const AveragePlayTimeChart = () => {
+const AveragePlayTimeChart = ({playDates, avgPlayTimes}) => {
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: playDates,
     datasets: [
       {
         label: 'Average Play Time',
-        data: [65, 59, 80, 81, 56, 55],
+        data: avgPlayTimes,
         fill: false,
         backgroundColor: 'rgb(255, 0, 0)', // línea roja
         borderColor: 'rgb(255, 0, 0)', // línea roja
       },
     ],
-  };
+  }; 
 
   const options = {
     scales: {
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Minutes',
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Date',
+        },
       },
     },
     plugins: {
@@ -95,7 +105,7 @@ const AveragePlayTimeChart = () => {
       },
     },
     layout: {
-      padding: 10,
+      padding: 0,
     },
     elements: {
       line: {
