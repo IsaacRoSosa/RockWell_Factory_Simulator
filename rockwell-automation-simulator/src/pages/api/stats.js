@@ -56,21 +56,26 @@ export default async function handler(req, res) {
        const playTimeData = playTimeResult.rows; 
  
        // Obtener las fechas de juego y el tiempo promedio de juego para la gráfica
-const playDates = playTimeData.map(row => {
-  const date = new Date(row.date_played);
-  return date.toLocaleDateString('en-GB');
-});
-const avgPlayTimes = playTimeData.map(row => row.avg_play_time_minutes);
+        const playDates = playTimeData.map(row => {
+          const date = new Date(row.date_played);
+          return date.toLocaleDateString('en-GB'); 
+        });
+        const avgPlayTimes = playTimeData.map(row => row.avg_play_time_minutes);
 
-      // Obtener información de usuarios con compañía
-      const usersWithCompanyResult = await client.query(`
-        SELECT u.user_username, u.user_contactemail, u.date_registered::date, c.company_name 
-        FROM "User" u 
-        JOIN "Company" c ON u.id_companyu = c.id_company
-        WHERE u.user_type = 'user'
+          // Obtener información de usuarios con compañía
+// Obtener información de usuarios con compañía y experiencia
+const usersWithCompanyResult = await client.query(`
+  SELECT u.user_username, u.user_contactemail, u.date_registered::date, c.company_name, e.score, e.contact, u.id_user
+  FROM "User" u 
+  JOIN "Company" c ON u.id_companyu = c.id_company
+  JOIN "Experience" e ON u.id_user = e.id_usere
+  WHERE u.user_type = 'user' AND u.user_active = true
+`);
 
-      `);
-      const usersWithCompany = usersWithCompanyResult.rows;
+const usersWithCompany = usersWithCompanyResult.rows.map(row => ({
+  ...row,
+  date_registered: new Date(row.date_registered).toISOString().split('T')[0],
+}));
 
       client.release();
 

@@ -86,6 +86,7 @@
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
+
   }
   
   .edit {
@@ -94,3 +95,32 @@
     cursor: pointer;
   }
   
+
+
+  .contactButton{
+     width: 30%;   
+     border-radius: 5px; 
+     padding: 5px;
+     border: none;
+  }
+
+  .disableButton{
+    background-color: transparent;
+    color: white;
+    border: 3px solid #FF0000;
+    box-shadow: 0 0 5px 0 #ff0000;
+    border-radius: 5px;
+    padding: 5px;
+    width: 35%; 
+    transition: 0.4s;  
+    cursor: pointer;
+    font-weight: 600;
+    
+
+  }
+
+  .disableButton:hover{
+    background-color: #FF0000;
+    color: white;
+    scale: 1.1;
+  }

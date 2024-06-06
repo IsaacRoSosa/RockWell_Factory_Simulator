@@ -13,18 +13,14 @@ const Sidebar = ({ setActiveSection }) => {
   return (
     <div className={styles.sidebar}>
 
-       <img className={styles.logo} loading="lazy" alt="" src="/RW-logo2.png" />
+       <img className={styles.logo} loading="lazy" alt="" src="/rw-logo-white.png" />
        <div className={styles.buttonContainer}>
        <button onClick={() => setActiveSection('section1')}> General View</button>
        </div>
        <div className={styles.buttonContainer}>
        <button onClick={() => setActiveSection('section2')}>Users</button>
         </div>
-    {/*
-     <div className={styles.buttonContainer}>
-        <button onClick={() => setActiveSection('section3')}>Section 3</button>
-        </div>
-    */}   
+
         <footer className={styles.footer}> 
         <button onClick={handleLogOut}>Log Out</button> 
         </footer>
