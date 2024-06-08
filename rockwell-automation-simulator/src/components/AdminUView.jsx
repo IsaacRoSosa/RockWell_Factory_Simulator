@@ -10,7 +10,7 @@ const AdminUView = () => {
   }, []);
 
   const fetchUsers = async () => {
-    try {
+    try { 
       const response = await fetch('/api/stats');
       const data = await response.json();
       setUsers(data.usersWithCompany);

@@ -1,85 +1,109 @@
-import React from 'react'
-import styles from '@/styles/UserGView.module.css'
- 
+import React, { useEffect, useState } from 'react';
+import styles from '@/styles/UserGView.module.css';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 const UserGeneralView = () => {
-    return (
-      <div className={styles.section1}>
-      <div className={styles.companyInfo}>
-        <img src="/cocacola-logo.jpeg" alt="Coca Cola Logo" className={styles.logo} />
-        <div>
-          <p>Company: Coca Cola</p>
-          <p>Start Date: 29 Febrero 2024</p>
-          <p>Location: Monterrey - Mexico</p>
-          <p>Target industry: Food and Beverages</p>
-        </div>
+  const recommendedProducts = [
+    {
+      image: '/images/emulate3d.png',
+      name: 'Emulate 3D',
+      description: 'Emulate3D Ultimate technology is designed to save time for companies...',
+      link: '/products/emulate3d',
+      type: 'Software'
+    },
+    // Add more product objects as needed
+  ];
+
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
+
+  useEffect(() => {
+    fetch('/api/user_stats', { 
+      method: 'GET',
+      credentials: 'include', 
+    })
+      .then(response => response.json())
+      .then(data => {
+        setUserData(data);
+        setLoading(false); // Set loading to false after data is fetched
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setLoading(false); // Set loading to false even if there is an error
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Display loading message while data is being fetched
+  }
+
+  if (!userData) {
+    return <div>No user data found</div>; // Handle case when no user data is found
+  }
+
+  return (
+    <div className={styles.main}>
+      <div className={styles.header}>
+        <h2>User Dashboard</h2>
+        <p>Welcome Back :)</p>
       </div>
-      <div className={styles.recommendedProducts}>
-      <div className={styles.HeadTable}>       <h2>Recommended Products</h2>  </div>
-   
-        <div className={styles.product}>
-          <img src="/emulate3d-logo.png" alt="Emulate 3D" className={styles.productLogo} />
-          <p>
-            Emulate3D Ultimate technology is designed to save time for companies that want to produce
-            high-quality models of their automation solutions, perform accurate analysis of their
-            operation, and create robust control tests for their systems in operation. It is used for
-            design planning and for virtual commissioning, with the possibility of simulation and
-            emulation in the same software.
-          </p>
+
+      <div className={styles.dashboard}>
+        <div className={styles.left}>
+          <div className={styles.userCard}>
+            <img src="/RW-logo2.png" alt={userData.company2} className={styles.companyLogo} />
+            <div className={styles.userInfo}>
+              <h3>Username: {userData.username}</h3>
+              <p>Company: {userData.company2}</p>
+              <p>Date registered: {userData.date_registered}</p>
+              <p>Experience Center: {userData.user_experience_center}</p>
+            </div>
+          </div>
+
+          <div className={styles.leaderboard}>
+            <h3>LEADERBOARD</h3>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Minigame</th>
+                  <th>Points</th>
+                  <th>Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="/images/coca-cola-logo.png" alt="Coca Cola" className={styles.icon} /> @CocaCola</td>
+                  <td>Foods Industry</td>
+                  <td>9821</td>
+                  <td>⭐⭐⭐⭐⭐</td>
+                </tr>
+                {/* Add more rows as needed */}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div className={styles.leaderboard}>
-        <div className={styles.HeadTable}>        <h2>LEADERBOARD</h2></div>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Minigame</th>
-              <th>Points</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>@Coca Cola</td>
-              <td>Foods Industry</td>
-              <td>9821</td>
-              <td><div className={styles.rating}></div></td>
-            </tr>
-            <tr>
-              <td>@Nestle</td>
-              <td>Foods Industry</td>
-              <td>9632</td>
-              <td><div className={styles.rating}></div></td>
-            </tr>
-            <tr>
-              <td>@PepsiCo</td>
-              <td>Foods Industry</td>
-              <td>8732</td>
-              <td><div className={styles.rating}></div></td>
-            </tr>
-            <tr>
-              <td>@Microsoft</td>
-              <td>Foods Industry</td>
-              <td>8643</td>
-              <td><div className={styles.rating}></div></td>
-            </tr>
-            <tr>
-              <td>@Ford</td>
-              <td>Automotive Industry</td>
-              <td>7231</td>
-              <td><div className={styles.rating}></div></td>
-            </tr>
-            <tr>
-              <td>@Toyota</td>
-              <td>Automotive Industry</td>
-              <td>9231</td>
-              <td><div className={styles.rating}></div></td>
-            </tr>
-          </tbody>
-        </table>
+
+        <div className={styles.right}>
+          <div className={styles.recommendedProducts}>
+            <h3>Recommended Products</h3>
+            <Carousel showThumbs={false} showStatus={false} infiniteLoop useKeyboardArrows autoPlay>
+              {recommendedProducts.map((product, index) => (
+                <div key={index} className={styles.productCard}>
+                  <img src={product.image} alt={product.name} className={styles.productImage} />
+                  <h4>{product.name}</h4>
+                  <p>{product.description}</p>
+                  <a href={product.link} className={styles.productLink}>Learn More</a>
+                  <span className={styles.productType}>{product.type}</span>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </div>
       </div>
     </div>
-    )
-}
+  );
+};
 
-export default UserGeneralView
+export default UserGeneralView;

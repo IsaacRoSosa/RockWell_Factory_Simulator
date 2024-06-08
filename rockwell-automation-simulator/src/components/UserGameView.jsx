@@ -14,7 +14,7 @@ const UserGameView = () => {
             </div>
 
         </div>
-      </div>
+      </div> 
     )
 }
 

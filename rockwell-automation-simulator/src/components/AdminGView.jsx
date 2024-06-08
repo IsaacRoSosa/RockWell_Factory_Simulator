@@ -4,6 +4,7 @@ import styles from '@/styles/AdminGView.module.css';
 import { SatisfactionChart, ClientsContactedChart, AveragePlayTimeChart } from '@/components/Charts';
 import cookie from 'js-cookie';
 import { useRouter } from 'next/router';
+import { set } from 'mongoose';
 
 // Dynamically import the ClientSideGlobe component with no SSR
 const ClientSideGlobe = dynamic(() => import('@/components/ClientSideGlobe'), { ssr: false });
@@ -20,7 +21,7 @@ function AdminGView() {
   const [dissatisfactionPlayers, setDissatisfactionPlayers] = useState(0);
   const [satisfactionRate, setSatisfactionRate] = useState(0);
   const [playDates, setPlayDates] = useState([]);
-  const [avgPlayTimes, setAvgPlayTimes] = useState([]);
+  const [connectedUsers, setConnectedUsers] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -48,7 +49,7 @@ function AdminGView() {
       setSatisfactionPlayers(data.satisfactionPlayers);
       setDissatisfactionPlayers(data.dissatisfactionPlayers);
       setSatisfactionRate(data.satisfactionRate);
-      setAvgPlayTimes(data.avgPlayTimes);
+      setConnectedUsers(data.connectedUsers);
       setPlayDates(data.playDates);
   
     } catch (error) {
@@ -154,7 +155,7 @@ function AdminGView() {
         </div>
         <div className={styles.playtime}>
           <div className={styles.chartContainer2}>
-            <AveragePlayTimeChart avgPlayTimes={avgPlayTimes} playDates={playDates} />
+            <AveragePlayTimeChart avgPlayTimes={contactedPlayers} playDates={playDates} />
           </div>
         </div>
       </div>

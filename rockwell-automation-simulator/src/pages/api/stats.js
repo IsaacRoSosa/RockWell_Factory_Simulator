@@ -50,17 +50,17 @@ export default async function handler(req, res) {
       //Obtener el porcentaje de satisfacción
       const satisfactionRate = satisfaction.rows[0].count / players.rows[0].count;
 
-      //Obtener datos para el grafico de gameTime
-       // Obtener datos de tiempo de juego
-       const playTimeResult = await client.query('SELECT date_played, AVG(EXTRACT(epoch FROM playtime)/60) as avg_play_time_minutes FROM "Experience" GROUP BY date_played ORDER BY date_played;');
-       const playTimeData = playTimeResult.rows; 
- 
-       // Obtener las fechas de juego y el tiempo promedio de juego para la gráfica
-        const playDates = playTimeData.map(row => {
+      //Obtener datos para el grafico de juegos por día
+        // Obtener datos para el gráfico de usuarios conectados
+        const connectedUsersResult = await client.query('SELECT date_played, COUNT(DISTINCT id_usere) as connected_users FROM "Experience" GROUP BY date_played ORDER BY date_played;');
+        const connectedUsersData = connectedUsersResult.rows;
+
+        // Obtener las fechas de juego y el número de usuarios conectados para la gráfica
+        const playDates = connectedUsersData.map(row => {
           const date = new Date(row.date_played);
           return date.toLocaleDateString('en-GB'); 
         });
-        const avgPlayTimes = playTimeData.map(row => row.avg_play_time_minutes);
+        const connectedUsers = connectedUsersData.map(row => row.connected_users);
 
           // Obtener información de usuarios con compañía
 // Obtener información de usuarios con compañía y experiencia
@@ -78,8 +78,6 @@ const usersWithCompany = usersWithCompanyResult.rows.map(row => ({
 }));
 
       client.release();
-
-
       res.status(200).json({ 
         totalUsers, 
         newUsersToday,
@@ -92,9 +90,7 @@ const usersWithCompany = usersWithCompanyResult.rows.map(row => ({
         dissatisfactionPlayers,
         satisfactionRate,
         playDates,
-        avgPlayTimes,
-    
-
+        connectedUsers,
       });
     } catch (error) {
       console.error('Database query failed:', error);
