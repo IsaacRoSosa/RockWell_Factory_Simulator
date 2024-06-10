@@ -1,15 +1,18 @@
 // components/AdminUView.jsx
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/AdminUView.module.css';
+import Loader from '@/components/Loader';
 
 const AdminUView = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
+    setLoading(true);
     try { 
       const response = await fetch('/api/stats');
       const data = await response.json();
@@ -18,7 +21,12 @@ const AdminUView = () => {
       console.error('Error fetching users:', error);
       
     }
+    setLoading(false);
   };
+
+  if (loading) {
+    return <div className={styles.Loader}><Loader /></div>;
+  }
 
   const disableUser = async (userId) => {
     if (window.confirm('Are you sure you want to disable this user?')) {
@@ -31,6 +39,7 @@ const AdminUView = () => {
           body: JSON.stringify({ userId }),
         });
         if (response.ok) {
+          console.log('User disabled');
           fetchUsers(); // Refetch users to update the table
         } else {
           console.error('Failed to disable user:', await response.text());

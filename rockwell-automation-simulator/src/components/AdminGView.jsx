@@ -5,11 +5,13 @@ import { SatisfactionChart, ClientsContactedChart, AveragePlayTimeChart } from '
 import cookie from 'js-cookie';
 import { useRouter } from 'next/router';
 import { set } from 'mongoose';
+import Loader from '@/components/Loader';
+
 
 // Dynamically import the ClientSideGlobe component with no SSR
 const ClientSideGlobe = dynamic(() => import('@/components/ClientSideGlobe'), { ssr: false });
 
-function AdminGView() {
+function AdminGView() { 
   const [user, setUser] = useState(null);
   const [totalUsers, setTotalUsers] = useState(0);
   const [newUsersToday, setNewUsersToday] = useState(0);
@@ -23,6 +25,7 @@ function AdminGView() {
   const [playDates, setPlayDates] = useState([]);
   const [connectedUsers, setConnectedUsers] = useState([]);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const userCookie = cookie.get('user');
@@ -37,6 +40,7 @@ function AdminGView() {
   }, []);
 
   const fetchStats = async () => {
+    setLoading(true);
     try {
       const response = await fetch('/api/stats');
       const data = await response.json();
@@ -55,10 +59,11 @@ function AdminGView() {
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
+    setLoading(false);
   };
 
-  if (!user) {
-    return <div>Loading...</div>; // Show a loading message
+  if (loading) {
+    return <div className={styles.Loader}><Loader /></div>;
   }
 
   const pinsData = [
