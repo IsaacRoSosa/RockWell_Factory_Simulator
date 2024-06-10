@@ -136,16 +136,25 @@ const InicioDeSesin1 = () => {
               onChange={handleInputChange}
               required
             />
-            <h2 className={styles.InputTitle}>Company location</h2>
-            <input
-              type="text"
-              name="location"
-              placeholder="Enter your company location"
-              className={styles.inputFull}
-              value={formData.location}
-              onChange={handleInputChange}
-              required
-            />
+      <h2 className={styles.InputTitle}>Experience Center</h2>
+<select
+  name="location"
+  className={styles.inputFull}
+  value={formData.location}
+  onChange={handleInputChange}
+  required
+>
+  <option value="">From where are you joining us?</option>
+  <option value="HQ CXC">HQ CXC, Milwaukee, WI</option>
+  <option value="San Jose EVIC">San Jose EVIC, San Jose, CA</option>
+  <option value="Americas Innovation Center">Americas Innovation Center, Monterrey, MX</option>
+  <option value="Mexico HQ">Mexico HQ, Mexico City, MX</option>
+  <option value="Colombia CXC ">Colombia CXC, Bogota, Colombia</option>
+  <option value="EMEA CXC">EMEA CXC, Karlsruhe, Germany</option>
+  <option value="APAC HQ CEC">APAC HQ CEC,Singapore</option>
+  <option value="Digital Transformation CXC">Digital Transformation CXC @ Pune, India  </option>
+ 
+</select>
             <h2 className={styles.InputTitle}>Company</h2>
             <input
               type="text"

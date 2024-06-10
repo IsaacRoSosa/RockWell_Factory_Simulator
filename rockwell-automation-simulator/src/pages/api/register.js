@@ -27,6 +27,7 @@ export default async function handler(req, res) {
     password,
     location,
     company,
+    industry
   } = req.body;
 
   if (
@@ -36,7 +37,8 @@ export default async function handler(req, res) {
     !email ||
     !password ||
     !location ||
-    !company
+    !company ||
+    !industry
   ) {
     return res.status(400).json({ message: 'All fields are required' });
   }
@@ -46,6 +48,7 @@ export default async function handler(req, res) {
 
     try {
       let companyId;
+      let industryId;
 
       // Check if company exists
       const companyExist = await client.query('SELECT * FROM "Company" WHERE company_name = $1', [company]);
@@ -55,16 +58,36 @@ export default async function handler(req, res) {
         companyId = companyExist.rows[0].id_company;
       } else {
         // Company doesn't exist, insert into Company table
-        const companyResult = await client.query('INSERT INTO "Company" (company_name, location) VALUES ($1, $2) RETURNING id_company', [company, location]);
+        const companyResult = await client.query('INSERT INTO "Company" (company_name) VALUES ($1) RETURNING id_company', [company]);
         companyId = companyResult.rows[0].id_company;
       }
+
+      //Check if industry exists
+    const industryExist = await client.query('SELECT * FROM "Industry" WHERE industry_name = $1', [industry]);
+
+    if (industryExist.rows.length > 0) {
+      // Industry exists, use its id
+      industryId = industryExist.rows[0].id_industry;
+    } else {
+      // Industry doesn't exist, insert into Industry table
+      const industryResult = await client.query('INSERT INTO "Industry" (industry_name) VALUES ($1) RETURNING id_industry', [industry]);
+      industryId = industryResult.rows[0].id_industry;
+    }
+
+    // Check if company-industry relation exists
+    const companyIndustryExist = await client.query('SELECT * FROM "Company_Industry" WHERE id_companyci = $1 AND id_industryci = $2', [companyId, industryId]);
+
+    if (companyIndustryExist.rows.length === 0) {
+      // Company-Industry relation doesn't exist, insert into Company_Industry table
+      await client.query('INSERT INTO "Company_Industry" (id_companyci, id_industryci) VALUES ($1, $2)', [companyId, industryId]);
+    }
 
       const currentDate = new Date().toISOString().slice(0, 23);
 
       const userResult = await client.query(
-        'INSERT INTO "User" (user_firstname, user_lastname, user_type, user_username, user_password, user_contactemail, date_registered, id_companyu) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id_user',
-        [firstname, lastname, 'user', username, password, email, currentDate, companyId]
-    );    
+        'INSERT INTO "User" (user_firstname, user_lastname, user_type, user_username, user_password, user_contactemail, date_registered, id_companyu, user_experience_center) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id_user',
+        [firstname, lastname, 'user', username, password, email, currentDate, companyId, location]
+      );    
 
       const userId = userResult.rows[0].id_user;
       return res.status(201).json({ message: 'User registered successfully', userId });

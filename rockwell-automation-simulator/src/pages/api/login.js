@@ -27,7 +27,7 @@ export default async function handler(req, res) {
           const userData = {
             user_name: user.user_firstname,
             user_type: user.user_type, 
-            user_id: user.user_id
+            user_id: user.id_user
           };
 
           const serializedCookie = cookie.serialize('user', JSON.stringify(userData), {
@@ -37,6 +37,7 @@ export default async function handler(req, res) {
             sameSite: 'strict',
             path: '/'
           });
+          console.log('User Id:', user.id_user); // Agrega este log para el Id de usuario
 
           res.setHeader('Set-Cookie', serializedCookie);
           console.log("Cookie set:", serializedCookie); // Agrega este log para la cookie

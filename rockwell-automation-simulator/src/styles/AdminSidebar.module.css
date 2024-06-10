@@ -53,7 +53,7 @@
     width: 100%;
     height: fit-content;
     border-radius: 15px;
-    margin-top: auto;
+    margin-top: auto; 
     color: white;
     margin-bottom: 40%;
     background-color: #F47C07;
@@ -79,5 +79,58 @@
 
 .LObutton:hover{
     background-color: #d8430d;
-    scale: 1.1;
+    scale: 1.1; 
 }
+.logoutConfirmation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.925);
+
+    padding: 20px;
+    z-index: 10;
+    width: 40%;
+    height: 30%;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 3px solid #FF0000;
+    box-shadow: 0 0 5px 0 #ff0000;
+
+  }
+  .logoutConfirmation h1 {
+       color: rgb(255, 59, 59);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-family: var(--font-mono);
+  }
+
+  .buttonsContainer{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+
+  }
+
+
+
+  .buttonsContainer button{
+    background-color: #EB2C2B;
+    width: 30%;
+    text-align: center;
+    font-size: 1.8em;
+    padding: 10px;
+    border-radius: 15px;
+    transition: 0.5s;
+        font-family: var(--font-mono);
+
+    
+  }
+
+    .buttonsContainer button:hover{
+        background-color: #FF5252;
+        scale: 1.1;
+    }

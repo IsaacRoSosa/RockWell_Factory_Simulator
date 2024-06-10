@@ -72,7 +72,7 @@ const AveragePlayTimeChart = ({playDates, avgPlayTimes}) => {
     labels: playDates,
     datasets: [
       {
-        label: 'Average Play Time',
+        label: 'Games played per day',
         data: avgPlayTimes,
         fill: false,
         backgroundColor: 'rgb(255, 0, 0)', // línea roja
@@ -87,7 +87,7 @@ const AveragePlayTimeChart = ({playDates, avgPlayTimes}) => {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Minutes',
+          text: 'Total Games',
         },
       },
       x: {

@@ -1,79 +1,190 @@
-/* components/Section1.module.css */
-.section1 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 20px;
-  }
-   
-  .companyInfo {
-    grid-column: span 2;
-    display: flex;
-    align-items: center;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .logo {
-    width: 100px;
-    margin-right: 20px;
-  }
-  
-  .recommendedProducts, .leaderboard {
-    background-color: #EB2C2B;
-    box-shadow: 0 0 10px 0 #ff6f00;;
-    border-radius: 8px;
-  }
+.main {
+  padding: 20px;
+  height: 100vh;
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.header p {
+  margin: 0;
+  font-size: 16px;
+  color: #777;
+}
+
+.dashboard {
+  display: flex;
+  gap: 20px;
+  height: 90%;
+}
+
+.userCard, .leaderboard, .recommendedProducts {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  border: 3px solid #FF0000;
+  box-shadow: 0 0 5px 0 #ff0000;
+  box-sizing: border-box;
+  min-width: fit-content;
+}
 
 
+.recommendedProducts{
+  height:100%;
+  display: flex;
+  text-align: center;
 
-  .product {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    height: 75%;
-  }
-  
-  .productLogo {
-    width: 50px;
-    margin-right: 20px;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+}
+.leaderboard{
+  height: 60%;
+}
 
-  .table thead{
-    background: #EB2C2B;
-    width: 100%;
-    color: white;
-  }
+.userCard {
+  display: flex;
+  align-items: center;
+  height: 40%;
+  justify-content: center;
+}
 
-  .HeadTable{
-    background: #EB2C2B;
-    width: 100%;
-    color: white;
-    text-align: center;
-    font-size: 1.4em;
-  }
-  
-  
-  .table th, .table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
+.companyLogo {
+  width: 140px;
+  height: auto;
+  margin-right: 20px;
+}
 
-  .table tbody tr{
-    background: #f9f9f9;
-  }
+.userInfo {
+  color: #333;
+  margin-left: 5%;
+}
+
+.userInfo h3 {
+  font-size: 1.6em;
+  text-align: center;
+  margin-bottom: 10px;
+
+}
+
+.userInfo p {
+  margin: 0;
+  font-size: 1.3em;
+  text-align: center;
   
-  .rating {
-    width: 100px;
-    height: 10px;
-    background: #00f;
-    border-radius: 5px;
-  }
-  
+}
+
+.leaderboard h3, .recommendedProducts h3 {
+  margin-top: 0;
+}
+
+.leaderboard h3 { 
+  text-align: center;
+  font-size: 1.6em;
+}
+
+.table {
+  width: 100%;
+  height: 25%;
+  border-collapse: collapse;
+  margin-top: 10px;
+
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+
+}
+
+.table th {
+  background-color: #ec2f167f;
+}
+
+.table td{
+  font-size: 1.1em;
+}
+
+.icon {
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.left{
+
+
+  display: flex;
+  flex-direction: column;
+  gap: 4%;
+}
+
+.right{
+
+  display: flex;
+  flex-direction: column;
+ 
+
+}
+
+.Loader{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+}
+
+.slide {
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.nextArrow {
+  right: 10px;
+}
+
+.prevArrow {
+  left: 10px;
+}
+
+.recommendedProducts {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.recommendedProducts h3 {
+  margin-top: 0;
+}
+
+.sliderContainer{
+  height: 80vh;
+  width: 120vh;
+
+}

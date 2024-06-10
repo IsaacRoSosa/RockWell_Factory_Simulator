@@ -4,11 +4,25 @@ import styles from '@/styles/AdminGView.module.css';
 import { SatisfactionChart, ClientsContactedChart, AveragePlayTimeChart } from '@/components/Charts';
 import cookie from 'js-cookie';
 import { useRouter } from 'next/router';
+import { set } from 'mongoose';
+import Loader from '@/components/Loader';
+
 
 // Dynamically import the ClientSideGlobe component with no SSR
 const ClientSideGlobe = dynamic(() => import('@/components/ClientSideGlobe'), { ssr: false });
 
-function AdminGView() {
+const experienceCenters = {
+  "HQ CXC": { lat: 43.0389, lng: -87.9065, country: 'Milwaukee, WI' },
+  "San Jose EVIC": { lat: 37.3382, lng: -121.8863, country: 'San Jose, CA' },
+  "Americas Innovation Center": { lat: 25.6866, lng: -100.3161, country: 'Monterrey, MX' },
+  "Mexico HQ": { lat: 19.4326, lng: -99.1332, country: 'Mexico City, MX' },
+  "Colombia CXC": { lat: 4.7110, lng: -74.0721, country: 'Bogota, Colombia' },
+  "EMEA CXC": { lat: 49.0069, lng: 8.4037, country: 'Karlsruhe, Germany' },
+  "APAC HQ CEC": { lat: 1.3521, lng: 103.8198, country: 'Singapore' },
+  "Digital Transformation CXC": { lat: 18.5204, lng: 73.8567, country: 'Pune, India' },
+};
+
+function AdminGView() { 
   const [user, setUser] = useState(null);
   const [totalUsers, setTotalUsers] = useState(0);
   const [newUsersToday, setNewUsersToday] = useState(0);
@@ -20,8 +34,14 @@ function AdminGView() {
   const [dissatisfactionPlayers, setDissatisfactionPlayers] = useState(0);
   const [satisfactionRate, setSatisfactionRate] = useState(0);
   const [playDates, setPlayDates] = useState([]);
-  const [avgPlayTimes, setAvgPlayTimes] = useState([]);
+  const [connectedUsers, setConnectedUsers] = useState([]);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [experienceCenterData, setExperienceCenterData] = useState([]);
+  const [selectedCenter, setSelectedCenter] = useState(null);
+
+
+
 
   useEffect(() => {
     const userCookie = cookie.get('user');
@@ -30,16 +50,17 @@ function AdminGView() {
       setUser(JSON.parse(userCookie));
       fetchStats();
     } else {
-      console.log('Redirecting to login'); // Agrega este log para verificar la redirección
-      router.push('/login'); // Redirect to login if no user is found
+      console.log('Redirecting to login'); 
+      router.push('/login'); 
     }
   }, []);
 
   const fetchStats = async () => {
+    setLoading(true);
     try {
       const response = await fetch('/api/stats');
       const data = await response.json();
-      setTotalUsers(data.totalUsers);
+      setTotalUsers(data.totalUsers); 
       setNewUsersToday(data.newUsersToday);
       setTotalPlayers(data.totalPlayers);
       setContactedPlayers(data.contactedPlayers);
@@ -48,35 +69,42 @@ function AdminGView() {
       setSatisfactionPlayers(data.satisfactionPlayers);
       setDissatisfactionPlayers(data.dissatisfactionPlayers);
       setSatisfactionRate(data.satisfactionRate);
-      setAvgPlayTimes(data.avgPlayTimes);
+      setConnectedUsers(data.connectedUsers);
       setPlayDates(data.playDates);
+      setExperienceCenterData(data.experienceCenterData);
   
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
+    setLoading(false);
   };
 
-  if (!user) {
-    return <div>Loading...</div>; // Show a loading message
+  if (loading) {
+    return <div className={styles.Loader}><Loader /></div>;
   }
 
-  const pinsData = [
-    { lat: 23.6345, lng: -102.5528, country: 'Mexico' },
-    { lat: -35.6751, lng: -71.5430, country: 'Chile' },
-    { lat: 4.5709, lng: -74.2973, country: 'Colombia' },
-    { lat: 37.0902, lng: -95.7129, country: 'USA' },
-    { lat: 56.1304, lng: -106.3468, country: 'Canada' },
-    { lat: -25.2744, lng: 133.7751, country: 'Australia' },
-    { lat: 55.3781, lng: -3.4360, country: 'UK' },
-    { lat: 61.5240, lng: 105.3188, country: 'Russia' },
-    { lat: 35.8617, lng: 104.1954, country: 'China' },
-    { lat: 20.5937, lng: 78.9629, country: 'India' },
-    { lat: -30.5595, lng: 22.9375, country: 'South Africa' },
-    { lat: -14.2350, lng: -51.9253, country: 'Brazil' },
-    { lat: 48.8566, lng: 2.3522, country: 'France' },
-    { lat: 51.1657, lng: 10.4515, country: 'Germany' },
-    { lat: 36.2048, lng: 138.2529, country: 'Japan' },
-  ];
+
+
+  const pinsData = experienceCenterData.map(center => ({
+    ...experienceCenters[center.center],
+    user_count: center.user_count,
+    avg_satisfaction: center.avg_satisfaction
+  }));
+
+
+  const userCounts = pinsData.map(center => center.user_count);
+const minUsers = Math.min(...userCounts);
+const maxUsers = Math.max(...userCounts);
+
+const getPinColor = (user_count) => {
+  if (minUsers === maxUsers) {
+    return `rgb(255, 0, 0)`; // Devuelve un color predeterminado si todos los usuarios tienen el mismo conteo
+  }
+  const percentage = (user_count - minUsers) / (maxUsers - minUsers);
+  const colorValue = Math.round(255 * percentage);
+  return `rgb(${255 - colorValue}, ${colorValue}, 0)`;
+};
+
 
 
 
@@ -92,6 +120,18 @@ function AdminGView() {
           </div>
         </div>
         <div className={styles.map}>
+        <div className={styles.experienceCenterButtons}>
+          {pinsData.map((center, index) => (
+            <button
+              key={index}
+              onClick={() => setSelectedCenter(center)}
+              className={styles.experienceCenterButton}
+              style={{backgroundColor: getPinColor(center.user_count)}}
+            >
+              {center.country}
+            </button>
+          ))}
+        </div>
           <ClientSideGlobe pinsData={pinsData} />
         </div>
         <div className={styles.stats}>
@@ -134,7 +174,7 @@ function AdminGView() {
             </div>
 
             <div className={styles.SatisfactionContainer2}>
-            <h3>{gameSuccess * 100}%</h3>
+            <h3>{(gameSuccess * 100).toFixed(2)}%</h3>
               <p>Based on clients contacted</p>
   
             </div>
@@ -143,7 +183,7 @@ function AdminGView() {
               <p>Played</p>
               <h3>{totalPlayers}</h3>
               </div>
-              <div className={styles.percentage2}>
+              <div className={styles.percentage2}> 
               <p>Contacted</p>
               <h3>{contactedPlayers}</h3>
               </div>
@@ -154,9 +194,17 @@ function AdminGView() {
         </div>
         <div className={styles.playtime}>
           <div className={styles.chartContainer2}>
-            <AveragePlayTimeChart avgPlayTimes={avgPlayTimes} playDates={playDates} />
+            <AveragePlayTimeChart avgPlayTimes={connectedUsers} playDates={playDates} />
           </div>
         </div>
+        {selectedCenter && (
+        <div className={styles.popUp}>
+          <h2>{selectedCenter.country}</h2>
+          <p>Users: {selectedCenter.user_count}</p>
+          <p>Avg Satisfaction: {selectedCenter.avg_satisfaction.toFixed(2)}</p>
+          <button onClick={() => setSelectedCenter(null)}>Close</button>
+        </div>
+      )}
       </div>
     </div>
   );

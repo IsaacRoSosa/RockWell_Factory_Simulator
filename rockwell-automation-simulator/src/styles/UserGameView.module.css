@@ -2,7 +2,6 @@
 .section {
     display: flex;
     flex-direction: column;
-   /* background: linear-gradient(to bottom, #ff7e5f, #feb47b); /* Ajusta los colores según tus necesidades */
    background-color: white;
  
     height: 105vh; /* Ajusta la altura según tus necesidades */
@@ -14,7 +13,7 @@
   width: 80%;
   background-color: aliceblue;
   align-self: center;
-  border-radius: 25px;
+  border-radius: 25px; 
   background-image: url('/game.png');
   background-size: cover;
   background-position: center;
