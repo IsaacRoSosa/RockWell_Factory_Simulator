@@ -2,86 +2,82 @@ import { Pool } from 'pg';
 import cookie from 'cookie';
 
 const pool = new Pool({
-    user: 'reto_3ild_user',
-    host: 'dpg-coc8di8l6cac73ermin0-a.oregon-postgres.render.com',
-    database: 'reto_3ild',
-    password: 'HbB2djxbDDT4UjmokA98wj0yWuSX3K07',
-    port: 5432,
-    ssl: {
-      rejectUnauthorized: false, 
-    }
+  user: 'reto_3ild_user',
+  host: 'dpg-coc8di8l6cac73ermin0-a.oregon-postgres.render.com',
+  database: 'reto_3ild',
+  password: 'HbB2djxbDDT4UjmokA98wj0yWuSX3K07',
+  port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  } 
 });
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      // Parse the cookies from the request
+      // Leer la cookie del encabezado de la solicitud
       const cookies = cookie.parse(req.headers.cookie || '');
+      const userCookie = cookies.user;
 
-      // Log cookies
-      console.log('Cookies:', cookies);
-
-      // Check if user cookie exists
-      if (!cookies.user) {
-        console.log('User cookie not found');
-        return res.status(400).json({ message: 'User cookie not found' });
+      if (!userCookie) {
+        res.status(401).json({ message: 'User not authenticated' });
+        return;
       }
 
-      // Get the user data from the cookie
-      const userData = JSON.parse(cookies.user);
-
-      // Log user data
-      console.log('User data:', userData);
-
-      // Check if user_id exists in userData
-      if (!userData.user_id) {
-        console.log('User ID not found in cookie');
-        return res.status(400).json({ message: 'User ID not found in cookie' });
-      }
-
-      // Get the user ID from the user data
+      // Decodificar la cookie
+      const userData = JSON.parse(userCookie);
       const userId = userData.user_id;
 
-      // Connect to the database and get the user data
+      // Conectar a la base de datos
       const client = await pool.connect();
-      const { rows } = await client.query('SELECT date_registered, user_experience_center, id_company FROM "User" WHERE user_id = $1', [userId]);
 
-      if (rows.length > 0) { 
-        const user = rows[0];
+      // Realizar las consultas necesarias
+      const userQuery = `
+        SELECT u.user_username, u.date_registered, u.user_experience_center, c.company_name
+        FROM "User" u
+        JOIN "Company" c ON u.id_companyu = c.id_company
+        WHERE u.id_user = $1
+      `;
+      const userResult = await client.query(userQuery, [userId]);
 
-        // Get the company of the user
-        const { rows: companyRows } = await client.query('SELECT company_name FROM "Company" WHERE id_company = $1', [user.id_company]);
-
-        if (companyRows.length > 0) {
-          const company = companyRows[0];
-
-          // Define the variables before using them in the response
-          const date_registered = user.date_registered;
-          const user_experience_center = user.user_experience_center;
-          const company2 = company.company_name;
-          const username = userData.user_name;
-
-          // Return the user and company data
-          res.status(200).json({
-            date_registered,
-            user_experience_center,
-            company2,
-            username
-          });
-        } else {
-          res.status(404).json({ message: 'Company not found' });
-        }
-      } else {
+      if (userResult.rows.length === 0) {
         res.status(404).json({ message: 'User not found' });
+        client.release();
+        return;
       }
 
+      const user = userResult.rows[0];
+
+      // Formatear la fecha
+      user.date_registered = new Date(user.date_registered).toISOString().split('T')[0];
+
+      //Obtenemos para el LeaderBoard
+      // Realizar las consultas necesarias
+      const leaderboardQuery = `
+      SELECT u.user_username, u.date_registered, u.user_experience_center, c.company_name, MAX(e.score) AS max_score, MAX(e.satisfaction) AS max_satisfaction, MAX(e.date_played) AS last_played
+      FROM "User" u
+      JOIN "Company" c ON u.id_companyu = c.id_company
+      JOIN "Experience" e ON u.id_user = e.id_usere
+      GROUP BY u.id_user, c.id_company
+      ORDER BY max_score DESC, max_satisfaction DESC
+      LIMIT 5
+    `;
+      const leaderboardResult = await client.query(leaderboardQuery);
+      const leaderboard = leaderboardResult.rows;
+
+      //formatear la fecha 
+      leaderboard.forEach((item) => {
+        item.last_played = new Date(item.last_played).toISOString().split('T')[0];
+      });
+              
+
       client.release();
-    } catch (error) {
+      res.status(200).json({ leaderboard, user });
+        } catch (error) {
       console.error('Database query failed:', error);
       res.status(500).json({ message: 'An error occurred while processing your request' });
     }
   } else {
-    console.error('Invalid request method:', req.method);
     res.status(405).end();
   }
 }

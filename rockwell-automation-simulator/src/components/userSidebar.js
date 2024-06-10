@@ -26,10 +26,10 @@ const UserSidebar = ({ setActiveSection }) => {
 
        <img className={styles.logo} loading="lazy" alt="" src="/rw-logo-white.png" />
        <div className={styles.buttonContainer}>
-       <button onClick={() => setActiveSection('section1')}> Juego</button>
+       <button onClick={() => setActiveSection('section1')}> GAME</button>
        </div>
        <div className={styles.buttonContainer}>
-       <button onClick={() => setActiveSection('section2')}>User</button>
+       <button onClick={() => setActiveSection('section2')}>USER</button>
         </div>
   
         <footer className={styles.footer}> 

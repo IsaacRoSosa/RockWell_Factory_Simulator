@@ -1,45 +1,101 @@
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/UserGView.module.css';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Loader from '@/components/Loader';
+import ProductCard from '@/components/ProductCard';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
+const NextArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${styles.arrow} ${styles.nextArrow}`}
+      style={{ ...style }}
+      onClick={onClick}
+    />
+  );
+};
+
+const PrevArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={`${styles.arrow} ${styles.prevArrow}`}
+      style={{ ...style }}
+      onClick={onClick}
+    />
+  );
+};
 
 const UserGeneralView = () => {
+  const [userData, setUserData] = useState(null);
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('/api/user_stats', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+
+        const data = await response.json();
+        setUserData(data.user);
+        setLeaderboard(data.leaderboard);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const recommendedProducts = [
     {
-      image: '/images/emulate3d.png',
+      image: 'https://dl.dropboxusercontent.com/scl/fi/lx3zocd07veuazejiij5f/paloma2.png?rlkey=vr9b3eyijugs8kz459m62sgzm&st=ugzjqt9f&dl=0',
       name: 'Emulate 3D',
       description: 'Emulate3D Ultimate technology is designed to save time for companies...',
       link: '/products/emulate3d',
-      type: 'Software'
+      type: 'Software' 
     },
+    { image: 'RW-logo2.png', name: 'FactoryTalk InnovationSuite', description: 'FactoryTalk InnovationSuite is a comprehensive solution that enables companies to achieve a connected enterprise...', link: '/products/factorytalk', type: 'Software' },
+
+
     // Add more product objects as needed
   ];
 
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const sliderSettings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    dots: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    rows: 1, // Limita el número de filas a 1
+    slidesPerRow: 1, // Limita el número de slides por fila a 1
 
-  useEffect(() => {
-    fetch('/api/user_stats', { 
-      method: 'GET',
-      credentials: 'include', 
-    })
-      .then(response => response.json())
-      .then(data => {
-        setUserData(data);
-        setLoading(false); // Set loading to false after data is fetched
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setLoading(false); // Set loading to false even if there is an error
-      });
-  }, []);
+  };
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading message while data is being fetched
+    return <div className={styles.Loader}><Loader /></div>;
   }
 
-  if (!userData) {
-    return <div>No user data found</div>; // Handle case when no user data is found
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -52,10 +108,10 @@ const UserGeneralView = () => {
       <div className={styles.dashboard}>
         <div className={styles.left}>
           <div className={styles.userCard}>
-            <img src="/RW-logo2.png" alt={userData.company2} className={styles.companyLogo} />
+            <img src="/RW-logo2.png" alt="" className={styles.companyLogo} />
             <div className={styles.userInfo}>
-              <h3>Username: {userData.username}</h3>
-              <p>Company: {userData.company2}</p>
+              <h3>{userData.user_username}</h3>
+              <p>{userData.company_name}</p>
               <p>Date registered: {userData.date_registered}</p>
               <p>Experience Center: {userData.user_experience_center}</p>
             </div>
@@ -67,19 +123,20 @@ const UserGeneralView = () => {
               <thead>
                 <tr>
                   <th>Username</th>
-                  <th>Minigame</th>
-                  <th>Points</th>
-                  <th>Rating</th>
+                  <th>Company</th>
+                  <th>Score</th>
+                  <th>Date Played</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><img src="/images/coca-cola-logo.png" alt="Coca Cola" className={styles.icon} /> @CocaCola</td>
-                  <td>Foods Industry</td>
-                  <td>9821</td>
-                  <td>⭐⭐⭐⭐⭐</td>
-                </tr>
-                {/* Add more rows as needed */}
+                {leaderboard.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.user_username}</td>
+                    <td>{item.company_name}</td>
+                    <td>{item.max_score}</td>
+                    <td>{item.last_played}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -88,17 +145,17 @@ const UserGeneralView = () => {
         <div className={styles.right}>
           <div className={styles.recommendedProducts}>
             <h3>Recommended Products</h3>
-            <Carousel showThumbs={false} showStatus={false} infiniteLoop useKeyboardArrows autoPlay>
+            <div className={styles.sliderContainer}>
+
+            <Slider {...sliderSettings} className={styles.slider}>
               {recommendedProducts.map((product, index) => (
-                <div key={index} className={styles.productCard}>
-                  <img src={product.image} alt={product.name} className={styles.productImage} />
-                  <h4>{product.name}</h4>
-                  <p>{product.description}</p>
-                  <a href={product.link} className={styles.productLink}>Learn More</a>
-                  <span className={styles.productType}>{product.type}</span>
+                <div key={index} className={styles.slide}>
+                  <ProductCard product={product} />
                 </div>
               ))}
-            </Carousel>
+            </Slider>
+            </div>
+
           </div>
         </div>
       </div>

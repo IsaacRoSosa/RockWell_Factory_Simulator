@@ -1,9 +1,6 @@
 .main {
   padding: 20px;
-
-  font-family: Arial, sans-serif;
   height: 100vh;
-  
 }
 
 .header {
@@ -39,6 +36,13 @@
   min-width: fit-content;
 }
 
+
+.recommendedProducts{
+  height:100%;
+  display: flex;
+  text-align: center;
+
+}
 .leaderboard{
   height: 60%;
 }
@@ -47,10 +51,11 @@
   display: flex;
   align-items: center;
   height: 40%;
+  justify-content: center;
 }
 
 .companyLogo {
-  width: 130px;
+  width: 140px;
   height: auto;
   margin-right: 20px;
 }
@@ -61,13 +66,16 @@
 }
 
 .userInfo h3 {
-  font-size: 1.3em;
+  font-size: 1.6em;
+  text-align: center;
+  margin-bottom: 10px;
 
 }
 
 .userInfo p {
   margin: 0;
-  font-size: 14px;
+  font-size: 1.3em;
+  text-align: center;
   
 }
 
@@ -75,20 +83,32 @@
   margin-top: 0;
 }
 
+.leaderboard h3 {
+  text-align: center;
+  font-size: 1.6em;
+}
+
 .table {
   width: 100%;
+  height: 25%;
   border-collapse: collapse;
   margin-top: 10px;
+
 }
 
 .table th, .table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+
 }
 
 .table th {
-  background-color: #f4f4f4;
+  background-color: #ec2f167f;
+}
+
+.table td{
+  font-size: 1.1em;
 }
 
 .icon {
@@ -97,46 +117,8 @@
   margin-right: 10px;
 }
 
-.recommendedProducts .carousel .slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.productCard {
-  text-align: center;
-  padding: 20px;
-}
-
-.productImage {
-  width: 100px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.productLink {
-  display: block;
-  margin: 10px 0;
-  color: #007bff;
-  text-decoration: none;
-}
-
-.productLink:hover {
-  text-decoration: underline;
-}
-
-.productType {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #f4f4f4;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #555;
-}
-
 .left{
-  width: 40%;
+
 
   display: flex;
   flex-direction: column;
@@ -144,8 +126,65 @@
 }
 
 .right{
-  width: 60%;
+
   display: flex;
   flex-direction: column;
+ 
+
+}
+
+.Loader{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+}
+
+.slide {
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.nextArrow {
+  right: 10px;
+}
+
+.prevArrow {
+  left: 10px;
+}
+
+.recommendedProducts {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.recommendedProducts h3 {
+  margin-top: 0;
+}
+
+.sliderContainer{
+  height: 80vh;
+  width: 120vh;
 
 }

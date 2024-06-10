@@ -40,7 +40,7 @@ function AdminGView() {
     try {
       const response = await fetch('/api/stats');
       const data = await response.json();
-      setTotalUsers(data.totalUsers);
+      setTotalUsers(data.totalUsers); 
       setNewUsersToday(data.newUsersToday);
       setTotalPlayers(data.totalPlayers);
       setContactedPlayers(data.contactedPlayers);
