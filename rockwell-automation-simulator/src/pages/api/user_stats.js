@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import cookie from 'cookie';
 
-const pool = new Pool({
+const pool = new Pool({ 
   user: 'reto_3ild_user',
   host: 'dpg-coc8di8l6cac73ermin0-a.oregon-postgres.render.com',
   database: 'reto_3ild',
@@ -69,10 +69,26 @@ export default async function handler(req, res) {
       leaderboard.forEach((item) => {
         item.last_played = new Date(item.last_played).toISOString().split('T')[0];
       });
+
+      //Consulta para obtener los productos recomendados
+
+      const productsQuery = `
+      SELECT product_name, product_desc, product_image, product_link
+      FROM "Product"
+      WHERE product_type LIKE '%SOFTWARE%'
+    `;
+    const productsResult = await client.query(productsQuery);
+    const recommendedProducts = productsResult.rows.map(row => ({
+      name: row.product_name,
+      description: row.product_desc,
+      image: row.product_image,
+      link: row.product_link,
+      type: 'Software'
+    }));
               
 
       client.release();
-      res.status(200).json({ leaderboard, user });
+      res.status(200).json({ leaderboard, user, recommendedProducts });
         } catch (error) {
       console.error('Database query failed:', error);
       res.status(500).json({ message: 'An error occurred while processing your request' });
