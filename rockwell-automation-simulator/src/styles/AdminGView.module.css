@@ -296,3 +296,73 @@
   justify-content: center;
   align-items: center;
 }
+
+.experienceCenterButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  width: 100%;
+
+
+}
+
+.experienceCenterButton {
+  padding: 10px 20px;
+  margin-left: 10px;
+
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+
+
+.experienceCenterButton:hover {
+  scale: 1.05;
+}
+
+
+.popUp {
+  position: absolute;
+  top: 30%;
+  left: 62.5%;
+  width: 200px;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.321);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popUp h2 {
+  margin: 0;
+}
+
+.popUp p {
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+
+
+.popUp button{
+  width: 40%;
+  padding: 5px 10px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.4s;
+  margin-top: 15px;
+}
+
+.popUp button:hover {
+  background-color: #f95252;
+}

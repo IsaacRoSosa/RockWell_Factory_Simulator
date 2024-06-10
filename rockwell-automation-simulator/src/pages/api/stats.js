@@ -11,6 +11,18 @@ const pool = new Pool({
   } 
 });
 
+const experienceCenters = {
+  "HQ CXC": { lat: 43.0389, lng: -87.9065, country: 'Milwaukee, WI' },
+  "San Jose EVIC": { lat: 37.3382, lng: -121.8863, country: 'San Jose, CA' },
+  "Americas Innovation Center": { lat: 25.6866, lng: -100.3161, country: 'Monterrey, MX' },
+  "Mexico HQ": { lat: 19.4326, lng: -99.1332, country: 'Mexico City, MX' },
+  "Colombia CXC": { lat: 4.7110, lng: -74.0721, country: 'Bogota, Colombia' },
+  "EMEA CXC": { lat: 49.0069, lng: 8.4037, country: 'Karlsruhe, Germany' },
+  "APAC HQ CEC": { lat: 1.3521, lng: 103.8198, country: 'Singapore' },
+  "Digital Transformation CXC": { lat: 18.5204, lng: 73.8567, country: 'Pune, India' },
+};
+
+
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
@@ -62,15 +74,32 @@ export default async function handler(req, res) {
         });
         const connectedUsers = connectedUsersData.map(row => row.connected_users);
 
-          // Obtener información de usuarios con compañía
-// Obtener información de usuarios con compañía y experiencia
-const usersWithCompanyResult = await client.query(`
-  SELECT u.user_username, u.user_contactemail, u.date_registered::date, c.company_name, e.score, e.contact, u.id_user
-  FROM "User" u 
-  JOIN "Company" c ON u.id_companyu = c.id_company
-  JOIN "Experience" e ON u.id_user = e.id_usere
-  WHERE u.user_type = 'user' AND u.user_active = true
-`);
+          // Obtener información de usuarios con compañía y experiencia
+          const usersWithCompanyResult = await client.query(`
+            SELECT u.user_username, u.user_contactemail, u.date_registered::date, c.company_name, e.score, e.contact, u.id_user
+            FROM "User" u 
+            JOIN "Company" c ON u.id_companyu = c.id_company
+            JOIN "Experience" e ON u.id_user = e.id_usere
+            WHERE u.user_type = 'user' AND u.user_active = true
+          `);
+
+             // Obtener la información agrupada por user_experience_center
+            const experienceCenterDataResult = await client.query(`
+              SELECT u.user_experience_center, COUNT(*) as user_count, AVG(e.satisfaction) as avg_satisfaction
+              FROM "User" u
+              JOIN "Experience" e ON u.id_user = e.id_usere
+              WHERE u.user_experience_center IS NOT NULL
+              GROUP BY u.user_experience_center;
+            `);
+
+            const experienceCenterData = experienceCenterDataResult.rows.map(row => ({
+              center: row.user_experience_center,
+              user_count: parseInt(row.user_count, 10),
+              avg_satisfaction: parseFloat(row.avg_satisfaction)
+            }));
+
+
+
 
 const usersWithCompany = usersWithCompanyResult.rows.map(row => ({
   ...row,
@@ -91,6 +120,7 @@ const usersWithCompany = usersWithCompanyResult.rows.map(row => ({
         satisfactionRate,
         playDates,
         connectedUsers,
+        experienceCenterData,
       });
     } catch (error) {
       console.error('Database query failed:', error);
