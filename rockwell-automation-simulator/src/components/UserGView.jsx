@@ -28,11 +28,12 @@ const PrevArrow = (props) => {
   );
 };
 
-const UserGeneralView = () => {
+const UserGeneralView = () => { 
   const [userData, setUserData] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -51,6 +52,7 @@ const UserGeneralView = () => {
         const data = await response.json();
         setUserData(data.user);
         setLeaderboard(data.leaderboard);
+        setRecommendedProducts(data.recommendedProducts);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -61,19 +63,7 @@ const UserGeneralView = () => {
     fetchUserData();
   }, []);
 
-  const recommendedProducts = [
-    {
-      image: 'https://dl.dropboxusercontent.com/scl/fi/lx3zocd07veuazejiij5f/paloma2.png?rlkey=vr9b3eyijugs8kz459m62sgzm&st=ugzjqt9f&dl=0',
-      name: 'Emulate 3D',
-      description: 'Emulate3D Ultimate technology is designed to save time for companies...',
-      link: '/products/emulate3d',
-      type: 'Software' 
-    },
-    { image: 'RW-logo2.png', name: 'FactoryTalk InnovationSuite', description: 'FactoryTalk InnovationSuite is a comprehensive solution that enables companies to achieve a connected enterprise...', link: '/products/factorytalk', type: 'Software' },
 
-
-    // Add more product objects as needed
-  ];
 
   const sliderSettings = {
     infinite: true,
