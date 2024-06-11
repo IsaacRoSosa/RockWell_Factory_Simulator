@@ -98,7 +98,7 @@ const UserGeneralView = () => {
       <div className={styles.dashboard}>
         <div className={styles.left}>
           <div className={styles.userCard}>
-            <img src="/RW-logo2.png" alt="" className={styles.companyLogo} />
+            <img src="/user-png.webp" alt="" className={styles.companyLogo} />
             <div className={styles.userInfo}>
               <h3>{userData.user_username}</h3>
               <p>{userData.company_name}</p>
