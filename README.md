@@ -2,7 +2,7 @@
 
 ## Website
 You can access the website here 👉 [RockWell Factory Simulator](https://rock-well-factory-simulator.vercel.app/)  
-Video Demo 👉 [Link to Video Demo]
+ 👉 [Video Demo](https://youtu.be/DwJ_8V0cYkQ)
 
 ### To log in as an Admin:
 User: isaacr  
